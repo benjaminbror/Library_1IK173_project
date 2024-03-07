@@ -24,6 +24,7 @@ public class Main {
 
             switch (option){
                 case 1:
+                
                     break;
                 case 2:
                     break;
@@ -40,6 +41,7 @@ public class Main {
                 default:
                     System.out.println("Please choose a valid option.");
             }
+
         }
     }
 }
