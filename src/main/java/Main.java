@@ -10,6 +10,10 @@ public class Main {
         Scanner input = new Scanner(System.in);
         logger.info("Starting");
 
+        DatabaseManager databaseManager = new DatabaseManager();
+        Library library = new Library(databaseManager);
+
+
 
         while (true){
 
