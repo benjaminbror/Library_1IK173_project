@@ -23,6 +23,7 @@ public class Library {
         }
     }
 
+
     public int generateMemberID(int educationLevel) {
 
           boolean uniqueID = false;
@@ -34,6 +35,7 @@ public class Library {
                 uniqueID = true;
             }
         }
+
 
 
         return result;

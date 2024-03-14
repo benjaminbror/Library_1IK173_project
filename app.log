@@ -47,3 +47,26 @@
 2024-03-14 14:05:57,084 INFO Main [main] Starting
 2024-03-14 14:06:12,771 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, maxNumOfBooks, currentNumOfBooks) VALUES('ben','bro',9970089898,4476,10,0)
 2024-03-14 14:06:12,783 ERROR DatabaseManager [main] Member was not added properly!. Member id=4476, ExMsg=[Ljava.lang.StackTraceElement;@7c2b6087
+2024-03-14 14:37:09,502 INFO Main [main] Starting
+2024-03-14 14:37:20,448 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, maxNumOfBooks, currentNumOfBooks) VALUES('ben','bro',9910082022,3771,7,0)
+2024-03-14 14:37:20,452 INFO DatabaseManager [main] Registered member correctly
+2024-03-14 14:37:36,583 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, maxNumOfBooks, currentNumOfBooks) VALUES('ben','bro',9910082088,3140,7,0)
+2024-03-14 14:37:36,584 INFO DatabaseManager [main] Registered member correctly
+2024-03-14 14:40:02,637 INFO Main [main] Starting
+2024-03-14 14:40:09,489 INFO Main [main] Starting
+2024-03-14 14:40:21,677 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, maxNumOfBooks, currentNumOfBooks) VALUES('ben','bro',1008022073,3156,7,0)
+2024-03-14 14:40:21,679 INFO DatabaseManager [main] Registered member correctly
+2024-03-14 14:42:05,222 INFO Main [main] Starting
+2024-03-14 14:42:07,647 INFO Main [main] Starting
+2024-03-14 14:42:31,404 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, maxNumOfBooks, currentNumOfBooks) VALUES('bro','bro',9910052059,3932,7,0)
+2024-03-14 14:42:31,407 INFO DatabaseManager [main] Registered member correctly
+2024-03-14 14:43:08,380 INFO Main [main] Starting
+2024-03-14 14:43:27,103 INFO Main [main] Starting
+2024-03-14 14:43:28,607 INFO Main [main] Starting
+2024-03-14 14:43:52,907 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, maxNumOfBooks, currentNumOfBooks) VALUES('bello','pello',9910052033,1192,3,0)
+2024-03-14 14:43:52,909 INFO DatabaseManager [main] Registered member correctly
+2024-03-14 15:16:25,694 INFO Main [main] Starting
+2024-03-14 15:16:37,384 INFO Main [main] Starting
+2024-03-14 15:21:56,145 INFO Main [main] Starting
+2024-03-14 15:22:26,373 INFO Main [main] Starting
+2024-03-14 15:25:52,401 INFO Main [main] Starting

@@ -103,19 +103,26 @@ public class Main {
                         }
                     }
 
-
                     int generated_id = library.generateMemberID(edulvl);
                     int maxBooks = library.setMemberMaxBooks(edulvl);
 
                     Member newMember = new Member(fname,lname,pnr, generated_id, maxBooks);
-                    library.registerMember(newMember);
+
                     break;
 
                 case 4:
                     //Suspend
+                    Scanner inputSuspension = new Scanner(System.in);
                     break;
                 case 5:
                     //Delete
+                    Scanner inputDeletion = new Scanner(System.in);
+
+                    System.out.println("Enter member id you want to delete: ");
+                    int memberID = inputDeletion.nextInt();
+
+
+
                     break;
                 case 6:
                     System.out.println("Exiting the program..");

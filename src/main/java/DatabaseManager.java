@@ -13,7 +13,8 @@ public class DatabaseManager {
     private Connection connection;
     public DatabaseManager(){
         try {
-            this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Library",  "root", "1IK173Lib");
+            //this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Library",  "root", "1IK173Lib");
+            this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library",  "root", "hejhej123");
 
         }catch (Exception e) {
             logger.error(e.getMessage());
@@ -32,6 +33,9 @@ public class DatabaseManager {
             e.printStackTrace();
         }
     }
+
+
+    /** Register member */
     public boolean isMember(long personal_number){
         boolean hasRows = false;
         try{
@@ -89,9 +93,54 @@ public class DatabaseManager {
                 member.getMemberID(), e.getStackTrace());
         logger.error(logMsg);
     }
-} 
+}
+
+    /** Delete member */
+
+    public void deleteMember(int memberId){
+        try {
+            String queryLoans = "DELETE FROM loans WHERE member_id = ?";
+            String queryMembers = "DELETE FROM members where member_id = ?";
+
+            try (PreparedStatement deleteLoansStatement = this.connection.prepareStatement(queryLoans);
+                 PreparedStatement deleteMemberStatement = this.connection.prepareStatement(queryMembers)) {
+
+                deleteLoansStatement.setInt(1, memberId);
+                deleteLoansStatement.executeUpdate();
+
+                deleteMemberStatement.setInt(1, memberId);
+                deleteMemberStatement.executeUpdate();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int getSuspensionCount(int memberId) {
+        int suspensionCount = 0;
+        try {
+            String query = "SELECT suspension FROM members WHERE member_id = ?";
+
+            try (PreparedStatement suspensionStatment = this.connection.prepareStatement(query)) {
+                suspensionStatment.setInt(1, memberId);
+
+                try (ResultSet resultSet = suspensionStatment.executeQuery()){
+                    if (resultSet.next()){
+                        suspensionCount = resultSet.getInt("suspension");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return suspensionCount;
+    }
+
+
 
 }
+
+
 /* 
 +getPersonalNumber() int - Denna lär också behövas!
 
