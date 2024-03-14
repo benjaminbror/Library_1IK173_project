@@ -10,14 +10,16 @@ public class Library {
 
     public void registerMember(Member newMember) {
         if (databaseManager.isMember(newMember.getPersonalNumber())) {
-            System.out.println("\u001B[31mThis member is already registered!");
+            System.out.println("\u001B[31mThis member is already registered! \u001B[0m");
             System.out.println("------------------------------");
         }
         if (databaseManager.isSuspended(newMember.getPersonalNumber())) {
-            System.out.println("\u001B[31mThis member has a suspension/is suspended!");
+            System.out.println("\u001B[31mThis member has a suspension/is suspended! \u001B[0m");
+            System.out.println("------------------------------");
         } else {
             databaseManager.registerMember(newMember);
             System.out.println("Added member: " + newMember.getFirstName() + " " + newMember.getLastName() + " with member ID: " + newMember.getMemberID());
+            System.out.println("------------------------------");
         }
     }
 

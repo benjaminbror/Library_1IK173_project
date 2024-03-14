@@ -1,14 +1,14 @@
 public class Member {
     private String firstName;
     private String lastName;
-    private int personalNumber;
+    private long personalNumber;
     private int memberID;
     private boolean suspension;
     private int maxNumOfBooks;
     private int currentNumOfBooks = 0;
 
 
-    public Member(String firstName, String lastName, int personalNumber, int memberID, int maxNumOfBooks) {
+    public Member(String firstName, String lastName, long personalNumber, int memberID, int maxNumOfBooks) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.personalNumber = personalNumber;
@@ -32,7 +32,7 @@ public class Member {
         this.lastName = lastName;
     }
 
-    public int getPersonalNumber() {
+    public long getPersonalNumber() {
         return personalNumber;
     }
 

@@ -25,12 +25,12 @@ public class DatabaseManager {
             e.printStackTrace();
         }
     }
-    public boolean isMember(int personal_number){ 
+    public boolean isMember(long personal_number){
         boolean hasRows = false;
         try{
             String query = "SELECT first_name, last_name FROM members WHERE personal_number = ?";
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
-            preparedStatement.setInt(1, personal_number);
+            preparedStatement.setLong(1, personal_number);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -42,13 +42,13 @@ public class DatabaseManager {
         } 
         return hasRows;
     }
-    public boolean isSuspended(int personal_number){
+    public boolean isSuspended(long personal_number){
         boolean hasRows = false;
         try{
             String query = "SELECT suspension, suspension_start_date, suspension_end_date, first_name, last_name FROM members WHERE personal_number = ?";
             
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
-            preparedStatement.setInt(1, personal_number);
+            preparedStatement.setLong(1, personal_number);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -68,7 +68,7 @@ public class DatabaseManager {
         PreparedStatement preparedStatement = this.connection.prepareStatement(query);
         preparedStatement.setString(1, member.getFirstName());
         preparedStatement.setString(2, member.getLastName());
-        preparedStatement.setInt(3, member.getPersonalNumber());
+        preparedStatement.setLong(3, member.getPersonalNumber());
         preparedStatement.setInt(4, member.getMemberID());
         preparedStatement.setInt(5, member.getMaxNumOfBooks());
         preparedStatement.setInt(6, member.getCurrentNumOfBooks());
