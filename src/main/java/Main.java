@@ -1,11 +1,17 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
-public class Main {
+    public class Main {
     private static Logger logger = LogManager.getLogger("Main");
 
+    private Library library;
+
+        public Main(Library library) {
+            this.library = library;
+        }
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         logger.info("Starting");
@@ -35,6 +41,8 @@ public class Main {
                 case 2:
                     break;
                 case 3:
+
+
                     break;
                 case 4:
                     break;
