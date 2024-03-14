@@ -14,7 +14,7 @@ public class DatabaseManager {
             this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "hejhej123");
 
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            logger.error(e.getMessage() + " Could not connect to database.");
             e.printStackTrace();
         }
     }
@@ -48,7 +48,7 @@ public class DatabaseManager {
                 hasRows = true;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage() + "could not get member-date for Personal number: " + personal_number);
         }
         return hasRows;
     }
@@ -66,7 +66,7 @@ public class DatabaseManager {
                 hasRows = true;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage() + "could not get member-data for MemberID: " + memberId);
         }
         return hasRows;
     }
@@ -86,6 +86,7 @@ public class DatabaseManager {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            logger.error("Could not get suspension-data for personal number: " + personal_number);
         }
         return hasRows;
     }
@@ -107,7 +108,7 @@ public class DatabaseManager {
             logger.info(member.getFirstName() + " was registered correctly! ");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             String logMsg = String.format("Member was not added properly!. Member id=%d, ExMsg=%s",
                     member.getMemberID(), e.getStackTrace());
             logger.error(logMsg);
@@ -133,7 +134,7 @@ public class DatabaseManager {
                 deleteMemberStatement.executeUpdate();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage() + " could not delete member with MemberID: " + memberId);
         }
     }
 
@@ -152,7 +153,7 @@ public class DatabaseManager {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage() + " Could not get suspensionCount for MemberID: " + memberId);
         }
         return suspensionCount;
     }
@@ -174,7 +175,7 @@ public class DatabaseManager {
                 }
             }
         }catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage() + "could not get number of violations for MemberID: " + memberId);
         }
         return violationCount;
     }
@@ -189,7 +190,7 @@ public class DatabaseManager {
                 suspendStatement.executeUpdate();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage() + " suspension not set properly for MemberID: " + memberId);
         }
     }
 
@@ -202,7 +203,7 @@ public class DatabaseManager {
                 resetStatement.executeUpdate();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage() + memberId + " violations not reset properly!");
         }
     }
 
@@ -232,7 +233,7 @@ public class DatabaseManager {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage() + " could not get number of loans for MemberID : " + memberId);
         }
         return numOfLoans;
     }
@@ -247,15 +248,8 @@ public class DatabaseManager {
 /* 
 +getPersonalNumber() int - Denna lär också behövas!
 
-+deleteMember(memberID) void
-+getSuspensionCount(memberID) int 
-
-+getNumOfViolations(memberID) int 
-+suspendMember(memberID) void
-+resetViolations(memberID) void
 
 +getISBN(title)
-+getNumOfLoans(memberID) int
 +getMaxNumOfLoans(memberID) int
 +isBookAvailable(isbn) boolean
 +loanBook(memberID, title alternativt isbn??) void

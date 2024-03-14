@@ -19,9 +19,6 @@ public class Main {
         Library library = new Library(databaseManager);
 
 
-
-
-
         while (true){
 
             //
@@ -31,7 +28,8 @@ public class Main {
             System.out.println("3. Register a new member");
             System.out.println("4. Suspend member");
             System.out.println("5. Delete member");
-            System.out.println("6. Exit application");
+            System.out.println("6. Information about returns");
+            System.out.println("7. Exit application");
             System.out.println("========================");
             System.out.println("Choose an option:");
 
@@ -128,6 +126,10 @@ public class Main {
 
                     break;
                 case 6:
+                    int validMember = 1;
+                    if (!databaseManager.isMember(3156))
+                    break;
+                case 7:
                     System.out.println("Exiting the program..");
                     System.exit(0);
                     break;
@@ -138,6 +140,9 @@ public class Main {
 
 
 
+
+
         }
+
     }
 }

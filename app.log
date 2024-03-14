@@ -76,3 +76,12 @@
 2024-03-14 16:08:03,906 INFO Main [main] Starting
 2024-03-14 16:54:14,358 INFO Main [main] Starting
 2024-03-14 16:54:15,760 INFO Main [main] Starting
+2024-03-14 18:22:34,542 INFO Main [main] Starting
+2024-03-14 18:23:59,323 INFO Main [main] Starting
+2024-03-14 18:23:59,598 ERROR DatabaseManager [main] Access denied for user 'root'@'localhost' (using password: YES)
+2024-03-14 18:25:02,504 INFO Main [main] Starting
+2024-03-14 18:25:02,785 ERROR DatabaseManager [main] Access denied for user 'root'@'localhost' (using password: YES) Could not connect to database, check username and password.
+2024-03-14 18:26:17,212 INFO Main [main] Starting
+2024-03-14 18:26:47,128 INFO Main [main] Starting
+2024-03-14 19:48:32,896 INFO Main [main] Starting
+2024-03-14 19:48:33,179 ERROR DatabaseManager [main] Access denied for user 'root'@'localhost' (using password: YES) Could not connect to database.null
