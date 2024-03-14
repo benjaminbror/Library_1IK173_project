@@ -4,10 +4,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
-
 public class Main {
     private static Logger logger = LogManager.getLogger("Main");
-
     private Library library;
 
         public Main(Library library) {

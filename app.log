@@ -32,3 +32,18 @@
 2024-03-14 11:27:33,280 INFO Main [main] Starting
 2024-03-14 11:28:18,727 INFO Main [main] Starting
 2024-03-14 11:29:02,876 INFO Main [main] Starting
+2024-03-14 13:43:29,485 INFO Main [main] Starting
+2024-03-14 13:56:28,563 INFO Main [main] Starting
+2024-03-14 13:56:30,534 INFO Main [main] Starting
+2024-03-14 13:58:13,664 INFO Main [main] Starting
+2024-03-14 13:58:14,050 ERROR DatabaseManager [main] Access denied for user 'root'@'localhost' (using password: YES)
+2024-03-14 14:01:09,599 INFO Main [main] Starting
+2024-03-14 14:01:28,274 INFO DatabaseManager [main] INSERT INTO members(first_name, last_name, personal_number, member_id, maxNumOfBooks, currentNumOfBooks) VALUES(?,?,?,?,?,?)
+2024-03-14 14:01:28,294 ERROR DatabaseManager [main] Member was not added properly!. Member id=4669, ExMsg=[Ljava.lang.StackTraceElement;@7c2b6087
+2024-03-14 14:03:05,164 INFO Main [main] Starting
+2024-03-14 14:03:07,162 INFO Main [main] Starting
+2024-03-14 14:03:22,506 INFO DatabaseManager [main] INSERT INTO members(first_name, last_name, personal_number, member_id, maxNumOfBooks, currentNumOfBooks) VALUES(?,?,?,?,?,?)
+2024-03-14 14:03:22,519 ERROR DatabaseManager [main] Member was not added properly!. Member id=3510, ExMsg=[Ljava.lang.StackTraceElement;@7c2b6087
+2024-03-14 14:05:57,084 INFO Main [main] Starting
+2024-03-14 14:06:12,771 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, maxNumOfBooks, currentNumOfBooks) VALUES('ben','bro',9970089898,4476,10,0)
+2024-03-14 14:06:12,783 ERROR DatabaseManager [main] Member was not added properly!. Member id=4476, ExMsg=[Ljava.lang.StackTraceElement;@7c2b6087
