@@ -53,6 +53,24 @@ public class DatabaseManager {
         return hasRows;
     }
 
+    public boolean isMember(int memberId) {
+        boolean hasRows = false;
+        try {
+            String query = "SELECT member_id FROM members WHERE member_id = ?";
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+            preparedStatement.setLong(1, memberId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                /* System.out.println(resultSet.getString("first_name")+ " " + resultSet.getString("last_name"));*/
+                hasRows = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return hasRows;
+    }
+
     public boolean isSuspended(long personal_number) {
         boolean hasRows = false;
         try {
@@ -141,8 +159,6 @@ public class DatabaseManager {
 
 
     /** Suspend member */
-
-
     public int getNumOfViolations(int memberId){
         int violationCount = 0;
         try {
@@ -189,6 +205,13 @@ public class DatabaseManager {
             e.printStackTrace();
         }
     }
+
+
+
+
+
+
+
 
 
 

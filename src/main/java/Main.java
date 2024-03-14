@@ -24,6 +24,8 @@ public class Main {
 
         while (true){
 
+            //
+
             System.out.println("1. Register a loan");
             System.out.println("2. Register a return");
             System.out.println("3. Register a new member");
@@ -122,6 +124,7 @@ public class Main {
                     System.out.println("Enter member id you want to delete: ");
                     int memberID = inputDeletion.nextInt();
 
+                    System.out.println(databaseManager.isMember(memberID));
 
                     break;
                 case 6:
