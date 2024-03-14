@@ -122,9 +122,6 @@ public class Main {
                     System.out.println("Enter member id you want to delete: ");
                     int memberID = inputDeletion.nextInt();
 
-                    System.out.println(databaseManager.getNumOfLoans(memberID));
-
-
 
                     break;
                 case 6:

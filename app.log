@@ -72,3 +72,5 @@
 2024-03-14 15:49:01,532 INFO Main [main] Starting
 2024-03-14 15:49:16,462 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, maxNumOfBooks, currentNumOfBooks) VALUES('be','be',2222220404,3789,7,0)
 2024-03-14 15:49:16,464 INFO DatabaseManager [main] be was registered correctly! 
+2024-03-14 16:03:38,078 INFO Main [main] Starting
+2024-03-14 16:08:03,906 INFO Main [main] Starting

@@ -143,6 +143,53 @@ public class DatabaseManager {
     /** Suspend member */
 
 
+    public int getNumOfViolations2(int memberId){
+        int violationCount = 0;
+        try {
+            String query = "SELECT Num_of_violations FROM members WHERE member_id = ?";
+
+            try (PreparedStatement numOfViolationsStatement = this.connection.prepareStatement(query)){
+                numOfViolationsStatement.setInt(1, memberId);
+
+                try (ResultSet resultSet = numOfViolationsStatement.executeQuery()){
+                    if (resultSet.next()){
+                        violationCount = resultSet.getInt("Num_of_violations");
+                    }
+                }
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return violationCount;
+    }
+
+
+    public void suspendMember(int memberId){
+        try{
+            String query = "UPDATE members SET suspension_start_date = CURRENT_DATE, suspension_end_date = CURRENT_DATE + INTERVAL 15 DAY, suspension = suspension + 1 WHERE member_id = ?";
+
+            try (PreparedStatement suspendStatement = this.connection.prepareStatement(query)){
+                suspendStatement.setInt(1, memberId);
+                suspendStatement.executeUpdate();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void resetViolations(int memberId){
+        try {
+            String query = "UPDATE members SET Num_of_violations = 0 WHERE member_id = ?";
+
+            try (PreparedStatement resetStatement = this.connection.prepareStatement(query)){
+                resetStatement.setInt(1, memberId);
+                resetStatement.executeUpdate();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     /** Loan book */
