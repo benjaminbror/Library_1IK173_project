@@ -46,6 +46,7 @@ public class DatabaseManager {
         boolean hasRows = false;
         try{
             String query = "SELECT suspension, suspension_start_date, suspension_end_date, first_name, last_name FROM members WHERE personal_number = ?";
+            
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
             preparedStatement.setInt(1, personal_number);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -59,28 +60,50 @@ public class DatabaseManager {
         }
         return hasRows;
 }
-public static void main(String[] args) {
-    DatabaseManager dbManager = new DatabaseManager();
-    dbManager.isSuspended(1234);  
+
+    public void registerMember (Member member){
+    try {
+        String query = "INSERT INTO members(first_name, last_name, personal_number, member_id, maxNumOfBooks, currentNumOfBooks) VALUES(?,?,?,?,?,?)";
+
+        PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+        preparedStatement.setString(1, member.getFirstName());
+        preparedStatement.setString(2, member.getLastName());
+        preparedStatement.setInt(3, member.getPersonalNumber());
+        preparedStatement.setInt(4, member.getMemberID());
+        preparedStatement.setInt(5, member.getMaxNumOfBooks());
+        preparedStatement.setInt(6, member.getCurrentNumOfBooks());
+        preparedStatement.executeUpdate();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+} 
+
 }
-}
-/*+isMember(person nummer)
-+isSuspended(person nummer)
-+registerMember(Member)
+/* 
++getPersonalNumber() int - Denna lär också behövas!
 
-+deleteMember()
++deleteMember(memberID) void
++getSuspensionCount(memberID) int 
 
-+getNumOfViolations()
-+suspendMember()
++getNumOfViolations(memberID) int 
++suspendMember(memberID) void
++resetViolations(memberID) void
 
-+getTypeOfMember()
-+getNumOfLoans()
++getISBN(title)
++getNumOfLoans(memberID) int
++getMaxNumOfLoans(memberID) int
++isBookAvailable(isbn) boolean
++loanBook(memberID, title alternativt isbn??) void
++decrementAvailableCopies(isbn) void
++incrementCurrentNumBooks(memberID) void
 
-+returnBook()
++returnBook(memberID, title alternativt isbn??) void 
++incrementAvailableCopies(isbn) void
++decrementCurrentNumBooks(memberID) void
++incrementViolations(memberID) void
++getDateOfLoan(memberID, isbn)
 
++is15DaysAgo(date/localdate?) boolean 
 
-
-
-+getDateOfLoan()
-+getNumOfAvailableBooks()
  */
