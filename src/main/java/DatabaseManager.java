@@ -3,8 +3,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Connection;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DatabaseManager {
+
+    private static Logger logger = LogManager.getLogger("DatabaseManager");
     private Connection connection;
     public DatabaseManager(){
         try {
@@ -45,15 +49,25 @@ public class DatabaseManager {
     public boolean isSuspended(int personal_number){
         boolean hasRows = false;
         try{
-            String query = "SELECT suspension, suspension_start_date, suspension_end_date, first_name, last_name FROM members WHERE personal_number = ?";
-            
+            //String query = "SELECT suspension, suspension_start_date, suspension_end_date, first_name, last_name FROM members WHERE personal_number = ?";
+
+            /** Ändrade till att bara hänta suspension*/
+            String query = "SELECT suspension FROM members WHERE personal_number = ?";
+
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
             preparedStatement.setInt(1, personal_number);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 /* System.out.println(resultSet.getString("first_name")+ " " + resultSet.getString("last_name") + " is Suspended from " + resultSet.getDate("suspension_start_date") + " - " + resultSet.getDate("suspension_end_date")); */
-                hasRows = true;
+                //hasRows = true;
+
+                /** La till getBoolean */
+                hasRows = resultSet.getBoolean("suspension");
+                if (hasRows){
+                    break;
+                }
+
             }
         }catch (Exception e){
                 e.printStackTrace();
@@ -76,12 +90,13 @@ public class DatabaseManager {
 
     } catch (Exception e) {
         e.printStackTrace();
+        logger.error("Error in registering a member!");
     }
 } 
 
 }
+
 /* 
-+getPersonalNumber() int - Denna lär också behövas!
 
 +deleteMember(memberID) void
 +getSuspensionCount(memberID) int 
