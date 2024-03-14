@@ -143,7 +143,7 @@ public class DatabaseManager {
     /** Suspend member */
 
 
-    public int getNumOfViolations2(int memberId){
+    public int getNumOfViolations(int memberId){
         int violationCount = 0;
         try {
             String query = "SELECT Num_of_violations FROM members WHERE member_id = ?";
