@@ -1,12 +1,18 @@
 import java.util.Scanner;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 public class Main {
-    private static Logger logger = Logger.getLogger(Main.class.getName());
+    private static Logger logger = LogManager.getLogger("Main");
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         logger.info("Starting");
+
+        DatabaseManager databaseManager = new DatabaseManager();
+        Library library = new Library(databaseManager);
+
 
 
         while (true){
