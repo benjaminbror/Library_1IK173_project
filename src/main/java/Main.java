@@ -39,9 +39,10 @@ public class Main {
 
             switch (option){
                 case 1:
-                
+                    //Loan
                     break;
                 case 2:
+                    //Return
                     break;
                 case 3:
                     Scanner registrationInput = new Scanner(System.in);
@@ -111,10 +112,12 @@ public class Main {
                     Member newMember = new Member(fname,lname,pnr, generated_id, maxBooks);
                     library.registerMember(newMember);
                     break;
-                    
+
                 case 4:
+                    //Suspend
                     break;
                 case 5:
+                    //Delete
                     break;
                 case 6:
                     System.out.println("Exiting the program..");
