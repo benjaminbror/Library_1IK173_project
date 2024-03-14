@@ -3,13 +3,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Connection;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DatabaseManager {
+
+    private static Logger logger = LogManager.getLogger("DatabaseManager");
+
     private Connection connection;
     public DatabaseManager(){
         try {
             this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Library",  "root", "1IK173Lib");
+
         }catch (Exception e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -72,10 +79,15 @@ public class DatabaseManager {
         preparedStatement.setInt(4, member.getMemberID());
         preparedStatement.setInt(5, member.getMaxNumOfBooks());
         preparedStatement.setInt(6, member.getCurrentNumOfBooks());
+        logger.info(preparedStatement.toString());
         preparedStatement.executeUpdate();
+        logger.info("Registered member correctly");
 
     } catch (Exception e) {
         e.printStackTrace();
+        String logMsg = String.format("Member was not added properly!. Member id=%d, ExMsg=%s",
+                member.getMemberID(), e.getStackTrace());
+        logger.error(logMsg);
     }
 } 
 
