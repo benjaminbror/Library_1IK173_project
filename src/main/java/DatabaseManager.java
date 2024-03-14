@@ -25,7 +25,8 @@ public class DatabaseManager {
             e.printStackTrace();
         }
     }
-    public void isMember(int personal_number){
+    public boolean isMember(int personal_number){ 
+        boolean hasRows = false;
         try{
             String query = "SELECT first_name, last_name FROM members WHERE personal_number = ?";
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
@@ -33,13 +34,16 @@ public class DatabaseManager {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                System.out.println(resultSet.getString("first_name")+ " " + resultSet.getString("last_name"));
+               /* System.out.println(resultSet.getString("first_name")+ " " + resultSet.getString("last_name"));*/ 
+                hasRows = true;
             }
         }catch (Exception e) {
             e.printStackTrace();
         } 
+        return hasRows;
     }
-    public void isSuspended(int personal_number){
+    public boolean isSuspended(int personal_number){
+        boolean hasRows = false;
         try{
             String query = "SELECT suspension, suspension_start_date, suspension_end_date, first_name, last_name FROM members WHERE personal_number = ?";
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
@@ -47,18 +51,19 @@ public class DatabaseManager {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                System.out.println(resultSet.getString("first_name")+ " " + resultSet.getString("last_name") + " is Suspended from " + resultSet.getDate("suspension_start_date") + " - " + resultSet.getDate("suspension_end_date"));
+                /* System.out.println(resultSet.getString("first_name")+ " " + resultSet.getString("last_name") + " is Suspended from " + resultSet.getDate("suspension_start_date") + " - " + resultSet.getDate("suspension_end_date")); */
+                hasRows = true;
             }
         }catch (Exception e){
                 e.printStackTrace();
         }
+        return hasRows;
 }
-/*public static void main(String[] args) {
+public static void main(String[] args) {
     DatabaseManager dbManager = new DatabaseManager();
-    dbManager.isSuspended(1234);  // replace 1234567890 with the actual personal number
-}*/
+    dbManager.isSuspended(1234);  
 }
-
+}
 /*+isMember(person nummer)
 +isSuspended(person nummer)
 +registerMember(Member)
