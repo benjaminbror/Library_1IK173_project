@@ -1,8 +1,4 @@
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.sql.Connection;
+import java.sql.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,19 +7,20 @@ public class DatabaseManager {
     private static Logger logger = LogManager.getLogger("DatabaseManager");
 
     private Connection connection;
-    public DatabaseManager(){
+
+    public DatabaseManager() {
         try {
             //this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Library",  "root", "1IK173Lib");
-            this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library",  "root", "hejhej123");
+            this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "hejhej123");
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             logger.error(e.getMessage());
             e.printStackTrace();
         }
     }
-    
+
     public void printBookTitles() {
-        try{
+        try {
             Statement statement = this.connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM books");
             while (resultSet.next()) {
@@ -35,29 +32,32 @@ public class DatabaseManager {
     }
 
 
-    /** Register member */
-    public boolean isMember(long personal_number){
+    /**
+     * Register member
+     */
+    public boolean isMember(long personal_number) {
         boolean hasRows = false;
-        try{
+        try {
             String query = "SELECT first_name, last_name FROM members WHERE personal_number = ?";
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
             preparedStatement.setLong(1, personal_number);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-               /* System.out.println(resultSet.getString("first_name")+ " " + resultSet.getString("last_name"));*/ 
+                /* System.out.println(resultSet.getString("first_name")+ " " + resultSet.getString("last_name"));*/
                 hasRows = true;
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } 
+        }
         return hasRows;
     }
-    public boolean isSuspended(long personal_number){
+
+    public boolean isSuspended(long personal_number) {
         boolean hasRows = false;
-        try{
+        try {
             String query = "SELECT suspension, suspension_start_date, suspension_end_date, first_name, last_name FROM members WHERE personal_number = ?";
-            
+
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
             preparedStatement.setLong(1, personal_number);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -66,38 +66,41 @@ public class DatabaseManager {
                 /* System.out.println(resultSet.getString("first_name")+ " " + resultSet.getString("last_name") + " is Suspended from " + resultSet.getDate("suspension_start_date") + " - " + resultSet.getDate("suspension_end_date")); */
                 hasRows = true;
             }
-        }catch (Exception e){
-                e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return hasRows;
-}
-
-    public void registerMember (Member member){
-    try {
-        String query = "INSERT INTO members(first_name, last_name, personal_number, member_id, maxNumOfBooks, currentNumOfBooks) VALUES(?,?,?,?,?,?)";
-
-        PreparedStatement preparedStatement = this.connection.prepareStatement(query);
-        preparedStatement.setString(1, member.getFirstName());
-        preparedStatement.setString(2, member.getLastName());
-        preparedStatement.setLong(3, member.getPersonalNumber());
-        preparedStatement.setInt(4, member.getMemberID());
-        preparedStatement.setInt(5, member.getMaxNumOfBooks());
-        preparedStatement.setInt(6, member.getCurrentNumOfBooks());
-        logger.info(preparedStatement.toString());
-        preparedStatement.executeUpdate();
-        logger.info("Registered member correctly");
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        String logMsg = String.format("Member was not added properly!. Member id=%d, ExMsg=%s",
-                member.getMemberID(), e.getStackTrace());
-        logger.error(logMsg);
     }
-}
 
-    /** Delete member */
+    public void registerMember(Member member) {
+        try {
+            String query = "INSERT INTO members(first_name, last_name, personal_number, member_id, maxNumOfBooks, currentNumOfBooks) VALUES(?,?,?,?,?,?)";
 
-    public void deleteMember(int memberId){
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+            preparedStatement.setString(1, member.getFirstName());
+            preparedStatement.setString(2, member.getLastName());
+            preparedStatement.setLong(3, member.getPersonalNumber());
+            preparedStatement.setInt(4, member.getMemberID());
+            preparedStatement.setInt(5, member.getMaxNumOfBooks());
+            preparedStatement.setInt(6, member.getCurrentNumOfBooks());
+            logger.info(preparedStatement.toString());
+            preparedStatement.executeUpdate();
+
+            logger.info(member.getFirstName() + " was registered correctly! ");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            String logMsg = String.format("Member was not added properly!. Member id=%d, ExMsg=%s",
+                    member.getMemberID(), e.getStackTrace());
+            logger.error(logMsg);
+        }
+    }
+
+    /**
+     * Delete member
+     */
+
+    public void deleteMember(int memberId) {
         try {
             String queryLoans = "DELETE FROM loans WHERE member_id = ?";
             String queryMembers = "DELETE FROM members where member_id = ?";
@@ -124,8 +127,8 @@ public class DatabaseManager {
             try (PreparedStatement suspensionStatment = this.connection.prepareStatement(query)) {
                 suspensionStatment.setInt(1, memberId);
 
-                try (ResultSet resultSet = suspensionStatment.executeQuery()){
-                    if (resultSet.next()){
+                try (ResultSet resultSet = suspensionStatment.executeQuery()) {
+                    if (resultSet.next()) {
                         suspensionCount = resultSet.getInt("suspension");
                     }
                 }
@@ -137,8 +140,38 @@ public class DatabaseManager {
     }
 
 
+    /** Suspend member */
+
+
+
+
+    /** Loan book */
+
+    public int getNumOfLoans(int memberId) {
+        int numOfLoans = 0;
+
+        try {
+            String query = "SELECT currentNumOfBooks FROM members WHERE member_id = ?";
+
+            try (PreparedStatement loansStatment = this.connection.prepareStatement(query)) {
+                loansStatment.setInt(1, memberId);
+                try (ResultSet resultSet = loansStatment.executeQuery()) {
+                    if (resultSet.next()) {
+                        numOfLoans = resultSet.getInt("currentNumOfBooks");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return numOfLoans;
+    }
+
 
 }
+
+
+
 
 
 /* 

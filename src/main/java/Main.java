@@ -51,7 +51,7 @@ public class Main {
                     while (!validFName) {
                         System.out.println("Enter your first name:");
                             fname = registrationInput.nextLine();
-                            if (fname.matches("[a-zA-Z]+")) {
+                            if (fname.matches("[a-zA-Z]+") || fname.length() <= 2) {
                                 validFName = true;
                             } else {
                                 System.out.println("\u001B[31mEnter a valid firstname! \u001B[0m");
@@ -65,7 +65,7 @@ public class Main {
                     while (!validLName){
                         System.out.println("Enter your last name: ");
                             lname = registrationInput.nextLine();
-                            if (lname.matches("[a-zA-Z]+")) {
+                            if (lname.matches("[a-zA-Z]+") || lname.length() <= 2) {
                                 validLName = true;
                             } else{
                                 System.out.println("\u001B[31mEnter a valid lastname! \u001B[0m");
@@ -108,6 +108,7 @@ public class Main {
 
                     Member newMember = new Member(fname,lname,pnr, generated_id, maxBooks);
 
+                    library.registerMember(newMember);
                     break;
 
                 case 4:
@@ -120,6 +121,8 @@ public class Main {
 
                     System.out.println("Enter member id you want to delete: ");
                     int memberID = inputDeletion.nextInt();
+
+                    System.out.println(databaseManager.getNumOfLoans(memberID));
 
 
 

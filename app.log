@@ -65,8 +65,10 @@
 2024-03-14 14:43:28,607 INFO Main [main] Starting
 2024-03-14 14:43:52,907 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, maxNumOfBooks, currentNumOfBooks) VALUES('bello','pello',9910052033,1192,3,0)
 2024-03-14 14:43:52,909 INFO DatabaseManager [main] Registered member correctly
-2024-03-14 15:16:25,694 INFO Main [main] Starting
-2024-03-14 15:16:37,384 INFO Main [main] Starting
-2024-03-14 15:21:56,145 INFO Main [main] Starting
-2024-03-14 15:22:26,373 INFO Main [main] Starting
-2024-03-14 15:25:52,401 INFO Main [main] Starting
+
+2024-03-14 15:45:38,565 INFO Main [main] Starting
+2024-03-14 15:46:32,618 INFO Main [main] Starting
+2024-03-14 15:47:17,068 INFO Main [main] Starting
+2024-03-14 15:49:01,532 INFO Main [main] Starting
+2024-03-14 15:49:16,462 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, maxNumOfBooks, currentNumOfBooks) VALUES('be','be',2222220404,3789,7,0)
+2024-03-14 15:49:16,464 INFO DatabaseManager [main] be was registered correctly! 
