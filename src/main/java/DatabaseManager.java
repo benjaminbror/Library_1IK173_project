@@ -1,3 +1,4 @@
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -80,14 +81,20 @@ public class DatabaseManager {
         boolean hasRows = false;
         try {
             String query = "SELECT suspension, suspension_start_date, suspension_end_date, first_name, last_name FROM members WHERE personal_number = ?";
-
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
             preparedStatement.setLong(1, personal_number);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 /* System.out.println(resultSet.getString("first_name")+ " " + resultSet.getString("last_name") + " is Suspended from " + resultSet.getDate("suspension_start_date") + " - " + resultSet.getDate("suspension_end_date")); */
-                hasRows = true;
+                //hasRows = true;
+
+                /** La till getBoolean */
+                hasRows = resultSet.getBoolean("suspension");
+                if (hasRows){
+                    break;
+                }
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -301,6 +308,7 @@ public class DatabaseManager {
 
             try (PreparedStatement returnStatment = this.connection.prepareStatement(query)){
 
+
                 returnStatment.setInt(1,memberID);
                 returnStatment.setInt(2,isbn);
                 returnStatment.executeUpdate();
@@ -347,28 +355,7 @@ public class DatabaseManager {
        }else{
            return LocalDate.now().minusDays(15).isAfter(date);
        }
+
     }
 
 }
-
-
-
-
-
-/* 
-+getPersonalNumber() int - Denna lär också behövas!
-
-
-+getMaxNumOfLoans(memberID) int
-+isBookAvailable(isbn) boolean
-+decrementAvailableCopies(isbn) void
-+incrementCurrentNumBooks(memberID) void
-
-+incrementAvailableCopies(isbn) void
-+decrementCurrentNumBooks(memberID) void
-+incrementViolations(memberID) void
-+getDateOfLoan(memberID, isbn)
-
-+is15DaysAgo(date/localdate?) boolean 
-
- */
