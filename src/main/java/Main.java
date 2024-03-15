@@ -29,7 +29,8 @@ public class Main {
             System.out.println("3. Register a new member");
             System.out.println("4. Suspend member");
             System.out.println("5. Delete member");
-            System.out.println("6. Exit application");
+            System.out.println("6. Unsuspend member");
+            System.out.println("7. Exit application");
             System.out.println("========================");
             System.out.println("Choose an option:");
 
@@ -40,14 +41,11 @@ public class Main {
                     System.out.println("Enter the title of the book you want to borrow: ");
                     System.out.println("Enter memberID: ");
 
-                    System.out.println(databaseManager.getLoanDate(3140,1234565));
-                    
                     //Loan
                     break;
                 case 2:
                     //Return
 
-                    databaseManager.suspendMember(3119);
 
                     break;
                 case 3:

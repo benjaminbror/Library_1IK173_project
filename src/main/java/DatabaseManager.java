@@ -201,6 +201,8 @@ public class DatabaseManager {
         }
     }
 
+
+
     public void resetViolations(int memberId){
         try {
             String query = "UPDATE members SET Num_of_violations = 0 WHERE member_id = ?";

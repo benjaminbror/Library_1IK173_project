@@ -146,3 +146,16 @@
 2024-03-15 12:57:43,296 INFO Main [main] Starting
 2024-03-15 12:57:46,779 ERROR DatabaseManager [main] No value specified for parameter 2member with memberID: 3119 was not suspended properly.
 2024-03-15 13:00:43,722 INFO Main [main] Starting
+2024-03-15 13:28:59,138 INFO Main [main] Starting
+2024-03-15 13:29:02,493 INFO Main [main] Starting
+2024-03-15 13:30:58,737 INFO Main [main] Starting
+2024-03-15 13:31:00,918 INFO Main [main] Starting
+2024-03-15 13:31:39,275 INFO Main [main] Starting
+2024-03-15 13:35:04,652 INFO Main [main] Starting
+2024-03-15 13:39:42,444 INFO Main [main] Starting
+2024-03-15 13:39:52,173 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, max_num_books, current_num_books) VALUES('benjamin','brorsson',9910082073,3213,7,0)
+2024-03-15 13:39:52,173 INFO DatabaseManager [main] benjamin was registered correctly! 
+2024-03-15 13:42:24,132 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, max_num_books, current_num_books) VALUES('BENJAMIN','BRORSSON',9910082073,3659,7,0)
+2024-03-15 13:42:24,133 INFO DatabaseManager [main] BENJAMIN was registered correctly! 
+2024-03-15 13:43:15,119 INFO Main [main] Starting
+2024-03-15 13:43:48,711 INFO Main [main] Starting
