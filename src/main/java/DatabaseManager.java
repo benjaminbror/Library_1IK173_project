@@ -5,6 +5,8 @@ import java.util.Calendar;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.xml.transform.Result;
+
 public class DatabaseManager {
 
     private static Logger logger = LogManager.getLogger("DatabaseManager");
@@ -307,6 +309,32 @@ public class DatabaseManager {
             logger.error(e.getMessage() + " could not return book for MemberID : " + memberID + " and ISBN: " + isbn);
 
         }
+    }
+
+    public LocalDate getLoanDate(int memberId, int isbn){
+        Date firstLoanDate = null;
+        LocalDate loanDate = null;
+
+
+        try {
+            String query = "SELECT loan_date FROM loans WHERE member_id = ? AND isbn = ?";
+
+            try (PreparedStatement loanDateStatement = this.connection.prepareStatement(query)){
+
+                loanDateStatement.setInt(1,memberId);
+                loanDateStatement.setInt(2,isbn);
+
+                try (ResultSet resultSet = loanDateStatement.executeQuery()) {
+                    if (resultSet.next()){
+                        firstLoanDate = resultSet.getDate("loan_date");
+                        loanDate = firstLoanDate.toLocalDate();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage() + " could not get loanDate for MemberID : " + memberId + " and ISBN: " + isbn);
+        }
+        return loanDate;
     }
 
     /** Extra method */

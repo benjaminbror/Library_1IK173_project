@@ -40,7 +40,7 @@ public class Main {
                     System.out.println("Enter the title of the book you want to borrow: ");
                     System.out.println("Enter memberID: ");
 
-                    databaseManager.loanBook("Book 1", 3140);
+                    System.out.println(databaseManager.getLoanDate(3140,1234565));
                     //Loan
                     break;
                 case 2:
@@ -109,6 +109,7 @@ public class Main {
 
                     int generated_id = library.generateMemberID(edulvl);
                     int maxBooks = library.setMemberMaxBooks(edulvl);
+
 
                     Member newMember = new Member(fname,lname,pnr, generated_id, maxBooks);
 
