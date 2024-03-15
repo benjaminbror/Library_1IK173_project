@@ -300,6 +300,73 @@ public class DatabaseManager {
         return numOfLoans;
     }
 
+     public int getMaxNumOfLoans(int memberId){
+        int maxNumOfLoans = 0;
+
+        try {
+            String query = "SELECT max_num_books FROM members WHERE member_id = ?";
+
+            try (PreparedStatement maxStatement = this.connection.prepareStatement(query)){
+                maxStatement.setInt(1, memberId);
+                try (ResultSet resultSet = maxStatement.executeQuery()){
+                    if (resultSet.next()){
+                        maxNumOfLoans = resultSet.getInt("max_num_books");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage() + " could not get max number of loans for MemberID : " + memberId);
+        }
+        return maxNumOfLoans;
+     }
+
+
+     public boolean isBookAvailable(int isbn){
+        boolean available = false;
+
+        try {
+            String query = "SELECT available_copies > 0 FROM books WHERE isbn = ?";
+            try (PreparedStatement availableStatement = this.connection.prepareStatement(query)){
+                availableStatement.setInt(1,isbn);
+                try (ResultSet resultSet = availableStatement.executeQuery()){
+                    if (resultSet.next()){
+                        available = resultSet.getBoolean(1);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage() + " could not data about ISBN: " + isbn);
+        }
+        return available;
+     }
+
+
+     public void decrementAvailableCopies(int isbn){
+        try {
+            String query = "UPDATE books SET available_copies = available_copies - 1 WHERE isbn = ?";
+            try (PreparedStatement decrementStatement = this.connection.prepareStatement(query)){
+                decrementStatement.setInt(1,isbn);
+                decrementStatement.executeUpdate();
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage() + " could not decrement number of copies for book with ISBN:  " + isbn);
+        }
+     }
+
+     public void incrementCurrentNumBooks(int memberId){
+        try {
+            String query = "UPDATE members SET current_num_books = current_num_books + 1 WHERE member_id = ?";
+            try (PreparedStatement incrementStatement = this.connection.prepareStatement(query)){
+                incrementStatement.setInt(1,memberId);
+                incrementStatement.executeUpdate();
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage() + " could not increment number of books for MemberID: " + memberId);
+        }
+     }
+
+
+
     /** Loan book */
 
     public void returnBook(int memberID, int isbn){
@@ -329,8 +396,8 @@ public class DatabaseManager {
                 incrementStatement.setInt(1,isbn);
                 incrementStatement.executeUpdate();
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            logger.error(e.getMessage() + " could not increment available copies for ISBN: " + isbn);
         }
     }
 
@@ -342,8 +409,8 @@ public class DatabaseManager {
                 decrementStatment.setInt(1, memberId);
                 decrementStatment.executeUpdate();
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            logger.error(e.getMessage() + " could not decrement number of books for member with memberID: " + memberId);
         }
     }
 
@@ -354,8 +421,8 @@ public class DatabaseManager {
                 incrementStatement.setInt(1, memberId);
                 incrementStatement.executeUpdate();
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            logger.error(e.getMessage() + " could not increment violations for " + memberId);
         }
     }
 

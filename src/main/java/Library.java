@@ -8,21 +8,57 @@ public class Library {
         this.databaseManager = databaseManager;
     }
 
-    public void registerMember(Member newMember) {
+    public int registerMember(Member newMember) {
         if (databaseManager.isMember(newMember.getPersonalNumber())) {
-            System.out.println("\u001B[31mThis member is already registered! \u001B[0m");
-            System.out.println("------------------------------");
+            return 1;
         }
         if (databaseManager.isSuspended(newMember.getPersonalNumber())) {
-            System.out.println("\u001B[31mThis member has a suspension/is suspended! \u001B[0m");
-            System.out.println("------------------------------");
+            return 2;
         } else {
             databaseManager.registerMember(newMember);
-            System.out.println("Added member: " + newMember.getFirstName() + " " + newMember.getLastName() + " with member ID: " + newMember.getMemberID());
-            System.out.println("------------------------------");
+            return 3;
         }
     }
 
+
+    public int deleteMember(int memberId) {
+        if (!databaseManager.isMember(memberId)) {
+            return 1;
+        }
+        if (databaseManager.getNumOfLoans(memberId) > 0) {
+            return 2;
+        } else {
+            databaseManager.deleteMember(memberId);
+            return 3;
+        }
+    }
+
+    public int deleteSuspendedMember(int memberId) {
+        if (!databaseManager.isMember(memberId)) {
+            return 1;
+        }
+        if (databaseManager.getNumOfLoans(memberId) > 0) {
+            return 2;
+        }
+        if (databaseManager.getSuspensionCount(memberId) > 2) {
+            return 3;
+        } else {
+            databaseManager.deleteMember(memberId);
+            return 4;
+        }
+    }
+
+    public int suspendMember(int memberId) {
+        if (!databaseManager.isMember(memberId)) {
+            return 1;
+        }
+        if (databaseManager.getNumOfViolations(memberId) > 2) {
+            databaseManager.suspendMember(memberId);
+            databaseManager.resetViolations(memberId);
+            return 2;
+        } else
+        return 3;
+    }
 
     public int generateMemberID(int educationLevel) {
 

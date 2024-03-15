@@ -186,3 +186,19 @@
 2024-03-15 15:32:15,453 INFO DatabaseManager [main] Test was registered correctly! 
 2024-03-15 15:32:21,847 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, max_num_books, current_num_books) VALUES('Test','Testsson,',2000,123,3,0)
 2024-03-15 15:32:21,850 INFO DatabaseManager [main] Test was registered correctly! 
+2024-03-15 18:57:33,786 INFO Main [main] Starting
+2024-03-15 18:57:38,127 ERROR DatabaseManager [main] You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'books = current_num_books + 1 WHERE member_id = 3785' at line 1 could not increment number of books for MemberID : 3785
+2024-03-15 18:57:38,128 ERROR DatabaseManager [main] Unknown column 'available_copies' in 'field list' could not decrement number of copies for book with ISBN: : 123456
+2024-03-15 19:01:06,879 INFO Main [main] Starting
+2024-03-15 19:01:08,022 ERROR DatabaseManager [main] You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'books = current_num_books + 1 WHERE member_id = 3785' at line 1 could not increment number of books for MemberID : 3785
+2024-03-15 19:01:08,023 ERROR DatabaseManager [main] Unknown column 'member_id' in 'where clause' could not decrement number of copies for book with ISBN: : 123456
+2024-03-15 19:03:01,932 INFO Main [main] Starting
+2024-03-15 19:05:57,932 INFO Main [main] Starting
+2024-03-15 19:05:59,378 INFO Main [main] Starting
+2024-03-15 19:06:03,353 ERROR DatabaseManager [main] You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'books = current_num_books + 1 WHERE member_id = 3785' at line 1 could not increment number of books for MemberID : 3785
+2024-03-15 19:07:29,983 INFO Main [main] Starting
+2024-03-15 19:07:31,202 ERROR DatabaseManager [main] Unknown column 'currentNumOfBooks' in 'field list' could not increment number of books for MemberID : 3785
+2024-03-15 19:08:05,567 INFO Main [main] Starting
+2024-03-15 19:08:58,733 INFO Main [main] Starting
+2024-03-15 19:09:03,638 ERROR DatabaseManager [main] Unknown column 'member_id' in 'where clause' could not decrement number of copies for book with ISBN: : 123456
+2024-03-15 19:09:27,180 INFO Main [main] Starting
