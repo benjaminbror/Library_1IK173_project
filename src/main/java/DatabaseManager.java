@@ -98,7 +98,7 @@ public class DatabaseManager {
 
     public void registerMember(Member member) {
         try {
-            String query = "INSERT INTO members(first_name, last_name, personal_number, member_id, maxNumOfBooks, currentNumOfBooks) VALUES(?,?,?,?,?,?)";
+            String query = "INSERT INTO members(first_name, last_name, personal_number, member_id, max_num_books, current_num_books) VALUES(?,?,?,?,?,?)";
 
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
             preparedStatement.setString(1, member.getFirstName());
@@ -188,6 +188,7 @@ public class DatabaseManager {
 
 
     public void suspendMember(int memberId){
+
         try{
             String query = "UPDATE members SET suspension_start_date = CURRENT_DATE, suspension_end_date = CURRENT_DATE + INTERVAL 15 DAY, suspension = suspension + 1 WHERE member_id = ?";
 
@@ -307,7 +308,6 @@ public class DatabaseManager {
             }
         } catch (Exception e) {
             logger.error(e.getMessage() + " could not return book for MemberID : " + memberID + " and ISBN: " + isbn);
-
         }
     }
 

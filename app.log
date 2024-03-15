@@ -114,3 +114,35 @@
 2024-03-15 10:54:29,874 INFO Main [main] Starting
 2024-03-15 10:54:32,902 ERROR DatabaseManager [main] Unknown column 'currentNumOfBooks' in 'field list' could not get number of loans for MemberID : 3140
 2024-03-15 10:56:02,633 INFO Main [main] Starting
+2024-03-15 11:42:02,447 INFO Main [main] Starting
+2024-03-15 11:43:49,373 INFO Main [main] Starting
+2024-03-15 11:44:18,143 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, maxNumOfBooks, currentNumOfBooks) VALUES('pelle','svanslo',1020304040,1870,3,0)
+2024-03-15 11:44:18,143 INFO DatabaseManager [main] pelle was registered correctly! 
+2024-03-15 11:50:38,551 INFO Main [main] Starting
+2024-03-15 11:50:40,019 INFO Main [main] Starting
+2024-03-15 12:09:22,596 INFO Main [main] Starting
+2024-03-15 12:13:02,264 INFO Main [main] Starting
+2024-03-15 12:15:28,672 INFO Main [main] Starting
+2024-03-15 12:15:31,502 ERROR DatabaseManager [main] Unknown column 'current_num_books' in 'field list' could not get number of loans for MemberID : 3140
+2024-03-15 12:19:03,477 ERROR DatabaseManager [main] Member was not added properly!. Member id=3761, ExMsg=[Ljava.lang.StackTraceElement;@607fbe09
+2024-03-15 12:19:03,479 ERROR DatabaseManager [main] Member was not added properly!. Member id=3761, ExMsg=[Ljava.lang.StackTraceElement;@60a2630a
+2024-03-15 12:20:16,919 INFO Main [main] Starting
+2024-03-15 12:20:28,998 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, max_num_books, current_num_books) VALUES('be','bro',9910082073,3893,7,0)
+2024-03-15 12:20:28,998 INFO DatabaseManager [main] be was registered correctly! 
+2024-03-15 12:23:34,653 INFO Main [main] Starting
+2024-03-15 12:23:36,127 INFO Main [main] Starting
+2024-03-15 12:30:26,681 INFO Main [main] Starting
+2024-03-15 12:30:28,094 INFO Main [main] Starting
+2024-03-15 12:30:35,975 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, max_num_books, current_num_books) VALUES('ben','bro',9910082073,3119,7,0)
+2024-03-15 12:30:35,975 INFO DatabaseManager [main] ben was registered correctly! 
+2024-03-15 12:42:46,468 INFO Main [main] Starting
+2024-03-15 12:42:47,866 INFO Main [main] Starting
+2024-03-15 12:45:14,818 INFO Main [main] Starting
+2024-03-15 12:45:16,242 INFO Main [main] Starting
+2024-03-15 12:45:26,852 ERROR DatabaseManager [main] You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+ 1 WHERE member_id = 3119' at line 1member with memberID: 3119 was not suspended properly.
+2024-03-15 12:54:19,681 INFO Main [main] Starting
+2024-03-15 12:54:21,056 INFO Main [main] Starting
+2024-03-15 12:57:41,900 INFO Main [main] Starting
+2024-03-15 12:57:43,296 INFO Main [main] Starting
+2024-03-15 12:57:46,779 ERROR DatabaseManager [main] No value specified for parameter 2member with memberID: 3119 was not suspended properly.
+2024-03-15 13:00:43,722 INFO Main [main] Starting

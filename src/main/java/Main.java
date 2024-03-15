@@ -46,6 +46,9 @@ public class Main {
                     break;
                 case 2:
                     //Return
+
+                    databaseManager.suspendMember(3119);
+
                     break;
                 case 3:
                     Scanner registrationInput = new Scanner(System.in);
@@ -111,15 +114,30 @@ public class Main {
                     int generated_id = library.generateMemberID(edulvl);
                     int maxBooks = library.setMemberMaxBooks(edulvl);
 
-
                     Member newMember = new Member(fname,lname,pnr, generated_id, maxBooks);
-
                     library.registerMember(newMember);
+
+                    /*if (library.registerMember(newMember) == 1){
+                        System.out.println("\u001B[31mThis member has a suspension/is suspended! \u001B[0m");
+                        System.out.println("------------------------------");
+                    } else if(library.registerMember(newMember) == 2){
+                        System.out.println("\u001B[31mThis member is already registered! \u001B[0m");
+                        System.out.println("------------------------------");
+                    }else{
+                        System.out.println("Added member: " + newMember.getFirstName() + " " + newMember.getLastName() + " with member ID: " + newMember.getMemberID());
+                        System.out.println("------------------------------");
+                    }*/
+
                     break;
 
                 case 4:
                     //Suspend
                     Scanner inputSuspension = new Scanner(System.in);
+
+                    System.out.println("Enter memberID you want to suspend: ");
+                    int memberId = inputSuspension.nextInt();
+
+
                     break;
                 case 5:
                     //Delete
@@ -127,8 +145,6 @@ public class Main {
 
                     System.out.println("Enter member id you want to delete: ");
                     int memberID = inputDeletion.nextInt();
-
-                    System.out.println(databaseManager.isMember(memberID));
 
                     break;
 
