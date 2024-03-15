@@ -234,8 +234,8 @@ public class DatabaseManager {
                     }
                 }
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            logger.error(e.getMessage() + " could not get ISBN for title : " + title);
         }
         return isbn;
     }
@@ -259,8 +259,8 @@ public class DatabaseManager {
                     loanStatment.executeUpdate();
                 }
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            logger.error(e.getMessage() + " could not loan " + title + " for MemberID : " + memberId);
         }
     }
 
@@ -296,8 +296,9 @@ public class DatabaseManager {
                 returnStatment.setInt(2,isbn);
                 returnStatment.executeUpdate();
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            logger.error(e.getMessage() + " could not return book for MemberID : " + memberID + " and ISBN: " + isbn);
+
         }
     }
 

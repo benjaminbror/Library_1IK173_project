@@ -39,7 +39,7 @@ public class Main {
                 case 1:
                     System.out.println("Enter the title of the book you want to borrow: ");
                     System.out.println("Enter memberID: ");
-                    
+
 
                     //Loan
                     break;
