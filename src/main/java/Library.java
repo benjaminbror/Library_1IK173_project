@@ -33,6 +33,7 @@ public class Library {
         }
     }
 
+
     public int deleteSuspendedMember(int memberId) {
         if (!databaseManager.isMember(memberId)) {
             return 1;
@@ -40,7 +41,7 @@ public class Library {
         if (databaseManager.getNumOfLoans(memberId) > 0) {
             return 2;
         }
-        if (databaseManager.getSuspensionCount(memberId) > 2) {
+        if (databaseManager.getSuspensionCount(memberId) <= 2) {
             return 3;
         } else {
             databaseManager.deleteMember(memberId);

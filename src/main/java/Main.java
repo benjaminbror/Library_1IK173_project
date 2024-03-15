@@ -60,7 +60,7 @@ public class Main {
                             if (fname.matches("[a-zA-Z]+") || fname.length() <= 2) {
                                 validFName = true;
                             } else {
-                                System.out.println("\u001B[31mEnter a valid firstname! \u001B[0m");
+                                System.out.println("\033[0;33mEnter a valid firstname! \033[0m");
                                 System.out.println("------------------------------");
                             }
                     }
@@ -74,7 +74,7 @@ public class Main {
                             if (lname.matches("[a-zA-Z]+") || lname.length() <= 2) {
                                 validLName = true;
                             } else{
-                                System.out.println("\u001B[31mEnter a valid lastname! \u001B[0m");
+                                System.out.println("\033[0;33mEnter a valid lastname! \033[0m");
                                 System.out.println("------------------------------");
                             }
                     }
@@ -89,7 +89,7 @@ public class Main {
                             pnr = Long.parseLong(pnrInput);
                             validPnr = true;
                         }else{
-                            System.out.println("\u001B[31mEnter a valid personal number in format (YYMMDDXXXX) \u001B[0m");
+                            System.out.println("\033[0;33mEnter a valid personal number in format (YYMMDDXXXX) \033[0m");
                             System.out.println("------------------------------");
                         }
                     }
@@ -104,7 +104,7 @@ public class Main {
                             edulvl = educationLevel;
                             validEducationLevel = true;
                         }else{
-                            System.out.println("\u001B[31mEnter a valid education level, between 1 - 4! \u001B[0m");
+                            System.out.println("\033[0;33mEnter a valid education level, between 1 - 4! \033[0m");
                             System.out.println("------------------------------");
                         }
                     }
@@ -113,18 +113,19 @@ public class Main {
                     int maxBooks = library.setMemberMaxBooks(edulvl);
 
                     Member newMember = new Member(fname,lname,pnr, generated_id, maxBooks);
-                    library.registerMember(newMember);
 
-                    /*if (library.registerMember(newMember) == 1){
-                        System.out.println("\u001B[31mThis member has a suspension/is suspended! \u001B[0m");
+                    int resultRegister = library.registerMember(newMember);
+                    if (resultRegister == 1){
+                        System.out.println("\033[0;31mhis member is already registered! \033[0m");
                         System.out.println("------------------------------");
-                    } else if(library.registerMember(newMember) == 2){
-                        System.out.println("\u001B[31mThis member is already registered! \u001B[0m");
+                    } else if(resultRegister == 2){
+                        System.out.println("\033[0;33mThis member has a suspension/is suspended! \033[0m");
                         System.out.println("------------------------------");
                     }else{
-                        System.out.println("Added member: " + newMember.getFirstName() + " " + newMember.getLastName() + " with member ID: " + newMember.getMemberID());
+                        System.out.println("\033[0;32mRegistered member: " + newMember.getFirstName() + " " + newMember.getLastName()
+                                        + " with memberID: " + newMember.getMemberID() + "\033[0m");
                         System.out.println("------------------------------");
-                    }*/
+                    }
 
                     break;
 
@@ -135,17 +136,68 @@ public class Main {
                     System.out.println("Enter memberID you want to suspend: ");
                     int memberId = inputSuspension.nextInt();
 
+                    int resultSuspend = library.suspendMember(memberId);
+                    if (resultSuspend == 1){
+                        System.out.println("\033[0;31mMember not found!\033[0m");
+                        System.out.println("------------------------------");
+                    }else if (resultSuspend == 2){
+                        System.out.println("\033[0;32mMember with memberID: " + memberId + " has been suspended! \033[0m");
+                        System.out.println("------------------------------");
+                    }else{
+                        System.out.println("\033[0;33mCould not suspend member with memberID: " + memberId + " \033[0m");
+                        System.out.println("------------------------------");
+                    }
+
 
                     break;
                 case 5:
                     //Delete
                     Scanner inputDeletion = new Scanner(System.in);
+                    System.out.println("1. Member wants to delete account");
+                    System.out.println("2. Member has too many suspensions");
+                    int option2 = inputDeletion.nextInt();
 
-                    System.out.println("Enter member id you want to delete: ");
-                    int memberID = inputDeletion.nextInt();
+                    if (option2 == 1){
+                        System.out.println("Enter the memberID you wish to delete: ");
+                        System.out.println("Member ID:");
+                        int memberIdToDelete = inputDeletion.nextInt();
 
+                        int resultDeleteApplication = library.deleteMember(memberIdToDelete);
+                        if (resultDeleteApplication == 1){
+                            System.out.println("\033[0;31mMember not found!\033[0m");
+                            System.out.println("------------------------------");
+                        }else if (resultDeleteApplication == 2){
+                            System.out.println("\033[0;33mCannot delete member due to an existing loan! \033[0m");
+                            System.out.println("------------------------------");
+                        }else {
+                            System.out.println("\033[0;32mMember found and deleted! \033[0m");
+                            System.out.println("------------------------------");
+                        }
 
+                    }else if (option2 == 2){
+                        //Endast memberid
+                        System.out.println("Enter the memberID with more than 2 suspensions you wish to delete: ");
+                        int memberIdToDelete2 = inputDeletion.nextInt();
+                        int resultDelete = library.deleteSuspendedMember(memberIdToDelete2);
+                        if (resultDelete == 1){
+                            System.out.println("\033[0;31mMember with memberID: " + memberIdToDelete2 + " not found! \033[0m");
+                            System.out.println("------------------------------");
+                        }else if (resultDelete == 2){
+                            System.out.println("\033[0;33mMember has an existing loan! \033[0m");
+                            System.out.println("------------------------------");
+                        } else if (resultDelete == 3) {
+                            System.out.println("\033[0;33mMember does not more than 2 suspensions! \033[0m");
+                            System.out.println("------------------------------");
+                        } else {
+                            System.out.println("\033[0;32mMember with memberID: " + memberIdToDelete2 + " has been deleted \033[0m");
+                            System.out.println("------------------------------");
+                        }
+
+                    }else{
+                        System.out.println("Invalid option");
+                    }
                     break;
+
 
                 case 6:
                     System.out.println("Exiting the program..");
