@@ -99,3 +99,12 @@
 2024-03-15 07:07:15,747 INFO Main [main] Starting
 2024-03-15 07:07:19,109 INFO Main [main] Starting
 2024-03-15 07:07:49,083 INFO Main [main] Starting
+2024-03-15 07:20:53,026 INFO Main [main] Starting
+2024-03-15 07:20:57,780 INFO DatabaseManager [main] Book with title: Book 1 was borrowed successfully by member with memberID: 3140
+2024-03-15 07:24:11,174 INFO Main [main] Starting
+2024-03-15 07:24:12,289 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO loans (member_id, isbn, loan_date) VALUES (3140, 123456, '2024-03-15')
+2024-03-15 07:24:12,292 INFO DatabaseManager [main] Book with title: Book 1 was borrowed successfully by member with memberID: 3140
+2024-03-15 07:24:48,146 INFO Main [main] Starting
+2024-03-15 07:24:49,549 INFO Main [main] Starting
+2024-03-15 07:24:51,200 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO loans (member_id, isbn, loan_date) VALUES (3140, 123456, '2024-03-15')
+2024-03-15 07:24:51,201 INFO DatabaseManager [main] Book with title: Book 1 was borrowed successfully by member with memberID: 3140

@@ -51,7 +51,7 @@ public class DatabaseManager {
                 hasRows = true;
             }
         } catch (Exception e) {
-            logger.error(e.getMessage() + "could not get member-date for Personal number: " + personal_number);
+            logger.error(e.getMessage() + "could not get member data with personal number: " + personal_number);
         }
         return hasRows;
     }
@@ -69,7 +69,7 @@ public class DatabaseManager {
                 hasRows = true;
             }
         } catch (Exception e) {
-            logger.error(e.getMessage() + "could not get member-data for MemberID: " + memberId);
+            logger.error(e.getMessage() + "could not get data about member with memberID: " + memberId);
         }
         return hasRows;
     }
@@ -105,9 +105,10 @@ public class DatabaseManager {
             preparedStatement.setInt(4, member.getMemberID());
             preparedStatement.setInt(5, member.getMaxNumOfBooks());
             preparedStatement.setInt(6, member.getCurrentNumOfBooks());
-            logger.info(preparedStatement.toString());
+
             preparedStatement.executeUpdate();
 
+            logger.info(preparedStatement.toString());
             logger.info(member.getFirstName() + " was registered correctly! ");
 
         } catch (Exception e) {
@@ -156,7 +157,7 @@ public class DatabaseManager {
                 }
             }
         } catch (Exception e) {
-            logger.error(e.getMessage() + " Could not get suspensionCount for MemberID: " + memberId);
+            logger.error(e.getMessage() + " Could not get suspensionCount for member with MemberID: " + memberId);
         }
         return suspensionCount;
     }
@@ -193,7 +194,7 @@ public class DatabaseManager {
                 suspendStatement.executeUpdate();
             }
         } catch (Exception e) {
-            logger.error(e.getMessage() + " suspension not set properly for MemberID: " + memberId);
+            logger.error(e.getMessage() + "member with memberID: " + memberId + " was not suspended properly.");
         }
     }
 
@@ -206,7 +207,7 @@ public class DatabaseManager {
                 resetStatement.executeUpdate();
             }
         } catch (Exception e) {
-            logger.error(e.getMessage() + memberId + " violations not reset properly!");
+            logger.error(e.getMessage() + " memberID: " + memberId + " violations not reset properly.");
         }
     }
 
@@ -235,7 +236,7 @@ public class DatabaseManager {
                 }
             }
         } catch (Exception e) {
-            logger.error(e.getMessage() + " could not get ISBN for title : " + title);
+            logger.error(e.getMessage() + " could not get ISBN with title: " + title);
         }
         return isbn;
     }
@@ -257,6 +258,9 @@ public class DatabaseManager {
                     loanStatment.setDate(3, new java.sql.Date(Calendar.getInstance().getTimeInMillis()));
 
                     loanStatment.executeUpdate();
+
+                    logger.info(loanStatment.toString());
+                    logger.info("Book with title: " + title + " was borrowed successfully by member with memberID: " + memberId);
                 }
             }
         } catch (Exception e) {
@@ -295,6 +299,9 @@ public class DatabaseManager {
                 returnStatment.setInt(1,memberID);
                 returnStatment.setInt(2,isbn);
                 returnStatment.executeUpdate();
+
+                logger.info(returnStatment.toString());
+                logger.info("Book with " + isbn + " and memberID: " + memberID + " was returned sucessfully");
             }
         } catch (Exception e) {
             logger.error(e.getMessage() + " could not return book for MemberID : " + memberID + " and ISBN: " + isbn);

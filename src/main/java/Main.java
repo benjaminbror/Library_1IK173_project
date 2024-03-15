@@ -40,7 +40,7 @@ public class Main {
                     System.out.println("Enter the title of the book you want to borrow: ");
                     System.out.println("Enter memberID: ");
 
-
+                    databaseManager.loanBook("Book 1", 3140);
                     //Loan
                     break;
                 case 2:
