@@ -41,6 +41,7 @@ public class Main {
                     System.out.println("Enter memberID: ");
 
                     System.out.println(databaseManager.getLoanDate(3140,1234565));
+                    
                     //Loan
                     break;
                 case 2:

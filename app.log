@@ -111,3 +111,6 @@
 2024-03-15 09:28:58,772 INFO Main [main] Starting
 2024-03-15 09:29:14,447 INFO Main [main] Starting
 2024-03-15 09:29:59,596 INFO Main [main] Starting
+2024-03-15 10:54:29,874 INFO Main [main] Starting
+2024-03-15 10:54:32,902 ERROR DatabaseManager [main] Unknown column 'currentNumOfBooks' in 'field list' could not get number of loans for MemberID : 3140
+2024-03-15 10:56:02,633 INFO Main [main] Starting

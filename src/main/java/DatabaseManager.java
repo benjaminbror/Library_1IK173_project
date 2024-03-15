@@ -274,13 +274,13 @@ public class DatabaseManager {
         int numOfLoans = 0;
 
         try {
-            String query = "SELECT currentNumOfBooks FROM members WHERE member_id = ?";
+            String query = "SELECT current_num_books FROM members WHERE member_id = ?";
 
             try (PreparedStatement loansStatment = this.connection.prepareStatement(query)) {
                 loansStatment.setInt(1, memberId);
                 try (ResultSet resultSet = loansStatment.executeQuery()) {
                     if (resultSet.next()) {
-                        numOfLoans = resultSet.getInt("currentNumOfBooks");
+                        numOfLoans = resultSet.getInt("current_num_books");
                     }
                 }
             }
