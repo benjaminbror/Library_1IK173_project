@@ -321,6 +321,44 @@ public class DatabaseManager {
         }
     }
 
+    public void incrementAvailableCopies(int isbn){
+        try{
+            String query = "UPDATE books SET available_copies = available_copies + 1 WHERE isbn = ?";
+
+            try (PreparedStatement incrementStatement = this.connection.prepareStatement(query)){
+                incrementStatement.setInt(1,isbn);
+                incrementStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void decrementCurrentNumBooks(int memberId){
+        try {
+            String query = "UPDATE members SET current_num_books = current_num_books - 1 WHERE member_id = ?";
+
+            try (PreparedStatement decrementStatment = this.connection.prepareStatement(query)){
+                decrementStatment.setInt(1, memberId);
+                decrementStatment.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void incrementViolations(int memberId){
+        try {
+            String query = "UPDATE members SET num_of_violations = num_of_violations +1 WHERE member_id = ?";
+            try (PreparedStatement incrementStatement = this.connection.prepareStatement(query)){
+                incrementStatement.setInt(1, memberId);
+                incrementStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public LocalDate getLoanDate(int memberId, int isbn){
         Date firstLoanDate = null;
         LocalDate loanDate = null;

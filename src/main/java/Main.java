@@ -45,7 +45,7 @@ public class Main {
                     break;
                 case 2:
                     //Return
-
+                    
 
                     break;
                 case 3:
@@ -154,12 +154,6 @@ public class Main {
                     System.out.println("Please choose a valid option.");
 
             }
-
-
-
-
-
         }
-
     }
 }
