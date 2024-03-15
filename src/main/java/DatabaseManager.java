@@ -1,4 +1,7 @@
 import java.sql.*;
+import java.time.LocalDate;
+import java.util.Calendar;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -218,6 +221,49 @@ public class DatabaseManager {
 
     /** Loan book */
 
+    public int getISBN(String title){
+        int isbn = 0;
+        try {
+            String query = "SELECT isbn FROM books WHERE title = ?";
+
+            try (PreparedStatement isbnStatement = this.connection.prepareStatement(query)) {
+                isbnStatement.setString(1, title);
+                try (ResultSet resultSet = isbnStatement.executeQuery()){
+                    if (resultSet.next()){
+                        isbn = resultSet.getInt("isbn");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return isbn;
+    }
+
+    public void loanBook(String title, int memberId){
+        try {
+            String queryIsbn = "SELECT isbn FROM books WHERE title = ?";
+            String queryInsertLoan = "INSERT INTO loans (member_id, isbn, loan_date) VALUES (?, ?, ?)";
+            try (PreparedStatement isbnStatement = this.connection.prepareStatement(queryIsbn);
+                 PreparedStatement loanStatment = this.connection.prepareStatement(queryInsertLoan)){
+
+                isbnStatement.setString(1, title);
+                ResultSet resultSet = isbnStatement.executeQuery();
+
+                if (resultSet.next()){
+                    int isbn = resultSet.getInt("isbn");
+                    loanStatment.setInt(1,memberId);
+                    loanStatment.setInt(2, isbn);
+                    loanStatment.setDate(3, new java.sql.Date(Calendar.getInstance().getTimeInMillis()));
+
+                    loanStatment.executeUpdate();
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public int getNumOfLoans(int memberId) {
         int numOfLoans = 0;
 
@@ -238,6 +284,32 @@ public class DatabaseManager {
         return numOfLoans;
     }
 
+    /** Loan book */
+
+    public void returnBook(int memberID, int isbn){
+        try {
+            String query = "DELETE FROM loans WHERE member_id = ? AND isbn = ?";
+
+            try (PreparedStatement returnStatment = this.connection.prepareStatement(query)){
+
+                returnStatment.setInt(1,memberID);
+                returnStatment.setInt(2,isbn);
+                returnStatment.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /** Extra method */
+
+    public boolean isDate15DaysAgo(LocalDate date){
+       if (date == null){
+           return false;
+       }else{
+           return LocalDate.now().minusDays(15).isAfter(date);
+       }
+    }
 
 }
 
@@ -249,14 +321,11 @@ public class DatabaseManager {
 +getPersonalNumber() int - Denna lär också behövas!
 
 
-+getISBN(title)
 +getMaxNumOfLoans(memberID) int
 +isBookAvailable(isbn) boolean
-+loanBook(memberID, title alternativt isbn??) void
 +decrementAvailableCopies(isbn) void
 +incrementCurrentNumBooks(memberID) void
 
-+returnBook(memberID, title alternativt isbn??) void 
 +incrementAvailableCopies(isbn) void
 +decrementCurrentNumBooks(memberID) void
 +incrementViolations(memberID) void
