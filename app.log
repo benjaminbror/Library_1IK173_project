@@ -167,3 +167,22 @@
 2024-03-15 14:55:52,289 INFO Main [main] Starting
 2024-03-15 14:56:17,841 INFO Main [main] Starting
 2024-03-15 14:56:37,591 INFO Main [main] Starting
+2024-03-15 15:02:28,933 INFO Main [main] Starting
+2024-03-15 15:02:30,751 INFO Main [main] Starting
+2024-03-15 15:02:42,031 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, max_num_books, current_num_books) VALUES('Benjamin','Brorsson',9910082083,3153,7,0)
+2024-03-15 15:02:42,032 INFO DatabaseManager [main] Benjamin was registered correctly! 
+2024-03-15 15:09:57,105 INFO Main [main] Starting
+2024-03-15 15:10:07,599 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, max_num_books, current_num_books) VALUES('benjamin','bror',9910102020,3653,7,0)
+2024-03-15 15:10:07,600 INFO DatabaseManager [main] benjamin was registered correctly! 
+2024-03-15 15:13:20,070 INFO Main [main] Starting
+2024-03-15 15:16:02,519 INFO Main [main] Starting
+2024-03-15 15:16:29,354 INFO Main [main] Starting
+2024-03-15 15:16:50,216 INFO Main [main] Starting
+2024-03-15 15:17:41,316 INFO Main [main] Starting
+2024-03-15 15:20:09,805 INFO Main [main] Starting
+2024-03-15 15:30:28,290 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, max_num_books, current_num_books) VALUES('Test','Testsson',1999,321,7,0)
+2024-03-15 15:30:28,296 INFO DatabaseManager [main] Test was registered correctly! 
+2024-03-15 15:32:15,449 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, max_num_books, current_num_books) VALUES('Test','Testsson',1999,321,7,0)
+2024-03-15 15:32:15,453 INFO DatabaseManager [main] Test was registered correctly! 
+2024-03-15 15:32:21,847 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, max_num_books, current_num_books) VALUES('Test','Testsson,',2000,123,3,0)
+2024-03-15 15:32:21,850 INFO DatabaseManager [main] Test was registered correctly! 

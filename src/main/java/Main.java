@@ -45,7 +45,8 @@ public class Main {
                     break;
                 case 2:
                     //Return
-                    
+                   
+
 
                     break;
                 case 3:
@@ -143,6 +144,7 @@ public class Main {
 
                     System.out.println("Enter member id you want to delete: ");
                     int memberID = inputDeletion.nextInt();
+
 
                     break;
 

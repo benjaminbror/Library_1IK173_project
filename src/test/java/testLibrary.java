@@ -4,7 +4,6 @@ import static org.mockito.Mockito.*;
 
 public class testLibrary {
 
-
     @Test
     public void setMemberMaxBooks(){
         DatabaseManager databaseManager = new DatabaseManager();
@@ -15,6 +14,5 @@ public class testLibrary {
 
         int expected = 3;
         assertEquals(expected, result);
-
     }
 }
