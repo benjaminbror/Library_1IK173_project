@@ -89,7 +89,7 @@ public class Main {
                         System.out.println("\033[0;33mBook does not exist \033[0m");
                         System.out.println("------------------------------");
                     } else if (returnResult == 3) {
-                        System.out.println("\033[0;33mSUSPENSION COUNT ABOVE 3 for memberID: " + memberId + " \033[0m");
+                        System.out.println("\033[0;33mViolationcount is 3 for memberID: " + memberId + " please suspend member! \033[0m");
                         System.out.println("------------------------------");
                     } else if (returnResult == 4){
                         System.out.println("\033[0;33mReturn is delayed! Book with ISBN: " + isbn + " has been returned and violation has been added for memberID: " + memberId + " \033[0m");
