@@ -236,6 +236,12 @@ public class Main {
 
                     int suspendResult = library.unsuspendMember(memb);
                     if (suspendResult == 1){
+                        System.out.println("\033[0;31mMember not found! \033[0m");
+                        System.out.println("------------------------------");
+                    } else if (suspendResult == 2){
+                        System.out.println("\033[0;32mMember is currently not suspended! \033[0m");
+                        System.out.println("------------------------------");
+                    } else if (suspendResult == 3){
                         System.out.println("\033[0;32mExpired suspensions found and deleted! \033[0m");
                         System.out.println("------------------------------");
                     } else{

@@ -43,7 +43,7 @@ public class Library {
         if (databaseManager.getNumOfLoans(memberId) > 0) {
             return 2;
         }
-        if (databaseManager.getSuspensionCount(memberId) <= 2) {
+        if (databaseManager.getSuspensionCount(memberId) < 3) {
             return 3;
         } else {
             databaseManager.deleteMember(memberId);
@@ -69,16 +69,16 @@ public class Library {
         if (!databaseManager.isMember(memberId)) {
             return 1;
         }
-        if (!databaseManager.doesBookExist(isbn)) { //La till denna för att se om boken finns
+        if (!databaseManager.doesBookExist(isbn)) {
             return 2;
         }
         if (!databaseManager.isBookAvailable(isbn)) {
             return 3;
         }
-        if (databaseManager.isCurrentlySuspended(memberId)) { //tog bort !databaseManager.isSuspended(memberId) då den använder personnummer
+        if (databaseManager.isCurrentlySuspended(memberId)) {
             return 4;
         }
-        if (databaseManager.getLoansOfCopy(memberId, isbn) > 0) { //La till denna så man ej kan låna fler än 1 copy av varje bok
+        if (databaseManager.getLoansOfCopy(memberId, isbn) > 0) {
             return 5;
         }
         int booksLoaned = databaseManager.getNumOfLoans(memberId);
@@ -98,20 +98,19 @@ public class Library {
         if (!databaseManager.isMember(memberId)) { //inte medlem
             return 1;
         }
-        if (!databaseManager.doesBookExist(isbn)) { //inte rätt metod, behöver en som kollar om boken finns i systemet
+        if (!databaseManager.doesBookExist(isbn)) {
             return 2; //bok finns ej
 
-            //Denna är löst nu med ny metod
         }
         if (databaseManager.isDate15DaysAgo(loanDate)) {
             databaseManager.incrementViolations(memberId);
             databaseManager.returnBook(memberId, isbn);
             databaseManager.decrementCurrentNumBooks(memberId);
             databaseManager.incrementAvailableCopies(isbn);
-            if (databaseManager.getNumOfViolations(memberId) > 3) { //La till denna så vi kan printa att member ska suspendas när han har 3 violations
+            if (databaseManager.getNumOfViolations(memberId) >= 3) {
                 return 3;
             }
-            return 4; //medlem finns, bok finns, men över belånad datum
+            return 4; //medlem finns, bok finns, men överbelånat datum
         } else {
             databaseManager.returnBook(memberId, isbn);
             databaseManager.decrementCurrentNumBooks(memberId);
@@ -128,7 +127,7 @@ public class Library {
         while (!uniqueID) {
             int randomPart = new Random().nextInt(900) + 100;
             result = Integer.parseInt(educationLevel + "" + randomPart);
-            if (!databaseManager.isMember(result)) { //OBS isMemberID Måste fixa query och metod.
+            if (!databaseManager.isMember(result)) {
                 uniqueID = true;
             }
         }
@@ -156,13 +155,21 @@ public class Library {
     }
 
     public int unsuspendMember(int memberID) {
+
+        if (!databaseManager.isMember(memberID)) {
+            return 1;
+        }
+        if (!databaseManager.isCurrentlySuspended(memberID)){
+            return 2;
+        }
         LocalDate currentDate = LocalDate.now();
         LocalDate endDate = databaseManager.getSuspensionEndDate(memberID);
         if (currentDate.isEqual(endDate) || currentDate.isAfter(endDate)) {
             databaseManager.resetCurrentSuspension(memberID);
-            return 1;
-        } else
-            return 2;
+            return 3;
+        } else {
+            return 4;
+        }
     }
 
 
