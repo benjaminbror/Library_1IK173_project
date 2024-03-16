@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -13,7 +14,7 @@ public class Library {
         if (databaseManager.isMember(newMember.getPersonalNumber())) {
             return 1;
         }
-        if (databaseManager.isSuspended(newMember.getPersonalNumber())) {
+        if (databaseManager.isCurrentlySuspended(newMember.getMemberID())) { //databaseManager.isSuspended(newMember.getPersonalNumber()
             return 2;
         } else {
             databaseManager.registerMember(newMember);
@@ -56,10 +57,11 @@ public class Library {
         }
         if (databaseManager.getNumOfViolations(memberId) > 2) {
             databaseManager.suspendMember(memberId);
+            databaseManager.setCurrentlySuspended(memberId);
             databaseManager.resetViolations(memberId);
             return 2;
         } else
-        return 3;
+            return 3;
     }
 
     public int loanBook(int memberId, String titel) {
@@ -67,16 +69,16 @@ public class Library {
         if (!databaseManager.isMember(memberId)) {
             return 1;
         }
-        if (!databaseManager.doesBookExist(isbn)){ //La till denna för att se om boken finns
+        if (!databaseManager.doesBookExist(isbn)) { //La till denna för att se om boken finns
             return 2;
         }
         if (!databaseManager.isBookAvailable(isbn)) {
             return 3;
         }
-        if (databaseManager.getSuspensionCount(memberId) > 0) { //tog bort !databaseManager.isSuspended(memberId) då den använder personnummer
+        if (!databaseManager.isCurrentlySuspended(memberId)) { //tog bort !databaseManager.isSuspended(memberId) då den använder personnummer
             return 4;
         }
-        if (databaseManager.getLoansOfCopy(memberId, isbn) > 0){ //La till denna så man ej kan låna fler än 1 copy av varje bok
+        if (databaseManager.getLoansOfCopy(memberId, isbn) > 0) { //La till denna så man ej kan låna fler än 1 copy av varje bok
             return 5;
         }
         int booksLoaned = databaseManager.getNumOfLoans(memberId);
@@ -98,6 +100,7 @@ public class Library {
         }
         if (!databaseManager.doesBookExist(isbn)) { //inte rätt metod, behöver en som kollar om boken finns i systemet
             return 2; //bok finns ej
+
             //Denna är löst nu med ny metod
         }
         if (databaseManager.isDate15DaysAgo(loanDate)) {
@@ -105,7 +108,7 @@ public class Library {
             databaseManager.returnBook(memberId, isbn);
             databaseManager.decrementCurrentNumBooks(memberId);
             databaseManager.incrementAvailableCopies(isbn);
-            if (databaseManager.getNumOfViolations(memberId) > 3){ //La till denna så vi kan printa att member ska suspendas när han har 3 violations
+            if (databaseManager.getNumOfViolations(memberId) > 3) { //La till denna så vi kan printa att member ska suspendas när han har 3 violations
                 return 3;
             }
             return 4; //medlem finns, bok finns, men över belånad datum
@@ -120,8 +123,8 @@ public class Library {
 
     public int generateMemberID(int educationLevel) {
 
-          boolean uniqueID = false;
-          int result = 0;
+        boolean uniqueID = false;
+        int result = 0;
         while (!uniqueID) {
             int randomPart = new Random().nextInt(900) + 100;
             result = Integer.parseInt(educationLevel + "" + randomPart);
@@ -132,7 +135,8 @@ public class Library {
 
         return result;
     }
-    public  int setMemberMaxBooks(int educationLevel) {
+
+    public int setMemberMaxBooks(int educationLevel) {
         int result = 0;
         switch (educationLevel) {
             case 1:
@@ -151,9 +155,15 @@ public class Library {
         return result;
     }
 
-    /*public int resetPassedSuspension(LocalDate date){
-        //När nu = suspension_end_date vill vi ta sätta både start och endate till null
+    public int unsuspendMember(int memberID) {
+        LocalDate currentDate = LocalDate.now();
+        LocalDate endDate = databaseManager.getSuspensionEndDate(memberID);
+        if (currentDate.isEqual(endDate)) {
+            databaseManager.resetCurrentSuspension(memberID);
+            return 1;
+        } else
+            return 2;
+    }
 
-    }*/
 
 }

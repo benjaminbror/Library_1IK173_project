@@ -170,7 +170,7 @@ public class Main {
 
                     int resultRegister = library.registerMember(newMember);
                     if (resultRegister == 1){
-                        System.out.println("\033[0;31mhis member is already registered! \033[0m");
+                        System.out.println("\033[0;31mThis member is already registered! \033[0m");
                         System.out.println("------------------------------");
                     } else if(resultRegister == 2){
                         System.out.println("\033[0;33mThis member has a suspension/is suspended! \033[0m");
@@ -240,7 +240,7 @@ public class Main {
                             System.out.println("\033[0;33mMember has an existing loan! \033[0m");
                             System.out.println("------------------------------");
                         } else if (resultDelete == 3) {
-                            System.out.println("\033[0;33mMember does not more than 2 suspensions! \033[0m");
+                            System.out.println("\033[0;33mMember does not have more than 2 suspensions! \033[0m");
                             System.out.println("------------------------------");
                         } else {
                             System.out.println("\033[0;32mMember with memberID: " + memberIdToDelete2 + " has been deleted \033[0m");
@@ -256,18 +256,17 @@ public class Main {
                 case 6:
                     //Unsuspend member
                     Scanner unsuspendInput = new Scanner(System.in);
-                    //System.out.println("Enter memberID:");
-                    //int memb = unsuspendInput.nextInt();
+                    System.out.println("Enter memberID:");
+                    int memb = unsuspendInput.nextInt();
 
-                        LocalDate date = LocalDate.now();
-                        int x = databaseManager.getMembersWithSuspension();
-                        LocalDate y = databaseManager.getSuspensionEndDate(x);
-                        if (date.isEqual(y)){
-                            databaseManager.resetCurrentSuspension(x);
-                            System.out.println("Passed suspensions found and deleted!");
-                        } else
-                            System.out.println("No passed suspension found!");
-
+                    int suspendResult = library.unsuspendMember(memb);
+                    if (suspendResult == 1){
+                        System.out.println("\033[0;32mPassed suspensions found and deleted! \033[0m");
+                        System.out.println("------------------------------");
+                    } else{
+                        System.out.println("\033[0;33mNo passed suspensions were found! \033[0m");
+                        System.out.println("------------------------------");
+                    }
                     break;
 
                 case 7:

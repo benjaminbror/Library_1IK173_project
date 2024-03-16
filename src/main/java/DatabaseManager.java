@@ -78,28 +78,20 @@ public class DatabaseManager {
         return hasRows;
     }
 
-    public boolean isSuspended(long personal_number) {
+
+    public boolean isCurrentlySuspended(int memberId) {
         boolean hasRows = false;
         try {
-            String query = "SELECT suspension, suspension_start_date, suspension_end_date, first_name, last_name FROM members WHERE personal_number = ?";
+            String query = "SELECT currently_suspended FROM members WHERE member_id = ?";
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
-            preparedStatement.setLong(1, personal_number);
+            preparedStatement.setLong(1, memberId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                /* System.out.println(resultSet.getString("first_name")+ " " + resultSet.getString("last_name") + " is Suspended from " + resultSet.getDate("suspension_start_date") + " - " + resultSet.getDate("suspension_end_date")); */
-                //hasRows = true;
-
-                /** La till getBoolean */
-                hasRows = resultSet.getBoolean("suspension");
-                if (hasRows){
-                    break;
-                }
-
+                hasRows = true;
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            logger.error("Could not get suspension-data for personal number: " + personal_number);
+            logger.error(e.getMessage() + "could not get data about member with memberID: " + memberId);
         }
         return hasRows;
     }
@@ -195,10 +187,40 @@ public class DatabaseManager {
     }
 
 
-    public void suspendMember(int memberId){
+    /*public void suspendMember(int memberId){
 
         try{
             String query = "UPDATE members SET suspension_start_date = CURRENT_DATE, suspension_end_date = CURRENT_DATE + INTERVAL 15 DAY, suspension = suspension + 1 WHERE member_id = ?";
+
+            try (PreparedStatement suspendStatement = this.connection.prepareStatement(query)){
+                suspendStatement.setInt(1, memberId);
+                suspendStatement.executeUpdate();
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage() + "member with memberID: " + memberId + " was not suspended properly.");
+        }
+    }*/
+
+
+    public void setCurrentlySuspended(int memberId){
+        try {
+            //String query = "UPDATE members SET currently_suspended = 1 WHERE member_id = ?";
+            String query = "UPDATE members SET suspension_start_date = CURRENT_DATE, suspension_end_date = CURRENT_DATE + INTERVAL 15 DAY, currently_suspended = 1 WHERE member_id = ?";
+
+            try (PreparedStatement incrementStatement = this.connection.prepareStatement(query)){
+                incrementStatement.setInt(1, memberId);
+                incrementStatement.executeUpdate();
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void suspendMember(int memberId){
+
+        try{
+            String query = "UPDATE members SET suspension = suspension + 1 WHERE member_id = ?";
 
             try (PreparedStatement suspendStatement = this.connection.prepareStatement(query)){
                 suspendStatement.setInt(1, memberId);
@@ -495,20 +517,13 @@ public class DatabaseManager {
         return loansOfCopy;
     }
 
-    /** Extra methods */
 
-    public boolean isDate15DaysAgo(LocalDate date){
-       if (date == null){
-           return false;
-       }else{
-           return LocalDate.now().minusDays(15).isAfter(date);
-       }
 
-    }
 
+    /** Unsuspend member */
     public LocalDate getSuspensionEndDate(int member_id){
-        Date firstEndDate = null;
-        LocalDate endDate = null;
+        //Date firstEndDate = null;
+        LocalDate endDate = LocalDate.of(2020,01,01);
         try {
             String query = "SELECT suspension_end_date FROM members WHERE member_id = ?";
             try (PreparedStatement dateStatement = this.connection.prepareStatement(query)){
@@ -516,8 +531,8 @@ public class DatabaseManager {
                 dateStatement.setInt(1,member_id);
                 try (ResultSet resultSet = dateStatement.executeQuery()){
                     if (resultSet.next()){
-                        firstEndDate = resultSet.getDate("suspension_end_date");
-                        endDate = firstEndDate.toLocalDate();
+                        endDate = resultSet.getDate("suspension_end_date").toLocalDate();
+                        //endDate = firstEndDate.toLocalDate();
                     }
                 }
             }
@@ -539,68 +554,14 @@ public class DatabaseManager {
         }
     }
 
-    public int getMembersWithSuspension(){
-        int memberID = 0;
-        try {
-            String query = "SELECT member_id FROM members WHERE suspension > 0";
-            try (PreparedStatement preparedStatement = this.connection.prepareStatement(query)){
-                try (ResultSet resultSet = preparedStatement.executeQuery()){
-                    if (resultSet.next()){
-                        memberID = resultSet.getInt("member_id");
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return memberID;
-    }
 
-
-
-
-    public void setCurrentlySuspended(int memberId){
-        try {
-            String query = "UPDATE members SET currently_suspended = 1 WHERE member_id = ?";
-            try (PreparedStatement incrementStatement = this.connection.prepareStatement(query)){
-                incrementStatement.setInt(1, memberId);
-                incrementStatement.executeUpdate();
-
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void removeCurrentlySuspended(int memberId){
-        try {
-            String query = "UPDATE members SET currently_suspended = 0 WHERE member_id = ?";
-            try (PreparedStatement incrementStatement = this.connection.prepareStatement(query)){
-                incrementStatement.setInt(1, memberId);
-                incrementStatement.executeUpdate();
-
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public boolean isCurrentlySuspended(int memberId) {
-        boolean hasRows = false;
-        try {
-            String query = "SELECT currently_suspended FROM members WHERE member_id = ?";
-            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
-            preparedStatement.setLong(1, memberId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                hasRows = true;
-            }
-        } catch (Exception e) {
-            logger.error(e.getMessage() + "could not get data about member with memberID: " + memberId);
-        }
-        return hasRows;
+    /** Extra methods */
+    public boolean isDate15DaysAgo(LocalDate date){
+       if (date == null){
+           return false;
+       }else{
+           return LocalDate.now().minusDays(15).isAfter(date);
+       }
     }
 
 
