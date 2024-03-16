@@ -151,13 +151,9 @@ public class Library {
         return result;
     }
 
-    //registerMember
+    /*public int resetPassedSuspension(LocalDate date){
+        //När nu = suspension_end_date vill vi ta sätta både start och endate till null
 
-    //deleteMember GLÖM INTE BORT ATT KALLA PÅ RETURN BOOK
+    }*/
 
-    //suspendMember
-
-    //loanBook
-
-    //returnBook
 }

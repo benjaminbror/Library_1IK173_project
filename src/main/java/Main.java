@@ -34,7 +34,9 @@ public class Main {
             System.out.println("========================");
             System.out.println("Choose an option:");
 
+
             int option = input.nextInt();
+
 
             switch (option){
                 case 1:
@@ -253,8 +255,21 @@ public class Main {
 
                 case 6:
                     //Unsuspend member
+                    Scanner unsuspendInput = new Scanner(System.in);
+                    //System.out.println("Enter memberID:");
+                    //int memb = unsuspendInput.nextInt();
+
+                        LocalDate date = LocalDate.now();
+                        int x = databaseManager.getMembersWithSuspension();
+                        LocalDate y = databaseManager.getSuspensionEndDate(x);
+                        if (date.isEqual(y)){
+                            databaseManager.resetCurrentSuspension(x);
+                            System.out.println("Passed suspensions found and deleted!");
+                        } else
+                            System.out.println("No passed suspension found!");
 
                     break;
+
                 case 7:
                     //Exit
                     System.out.println("Exiting the program..");

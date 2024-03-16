@@ -1,6 +1,7 @@
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import org.apache.logging.log4j.LogManager;
@@ -494,7 +495,7 @@ public class DatabaseManager {
         return loansOfCopy;
     }
 
-    /** Extra method */
+    /** Extra methods */
 
     public boolean isDate15DaysAgo(LocalDate date){
        if (date == null){
@@ -504,5 +505,103 @@ public class DatabaseManager {
        }
 
     }
+
+    public LocalDate getSuspensionEndDate(int member_id){
+        Date firstEndDate = null;
+        LocalDate endDate = null;
+        try {
+            String query = "SELECT suspension_end_date FROM members WHERE member_id = ?";
+            try (PreparedStatement dateStatement = this.connection.prepareStatement(query)){
+
+                dateStatement.setInt(1,member_id);
+                try (ResultSet resultSet = dateStatement.executeQuery()){
+                    if (resultSet.next()){
+                        firstEndDate = resultSet.getDate("suspension_end_date");
+                        endDate = firstEndDate.toLocalDate();
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return endDate;
+    }
+
+    public void resetCurrentSuspension(int memberId){
+        try {
+            String query = "UPDATE members SET currently_suspended = 0, suspension_end_date = null, suspension_start_date = null WHERE member_id = ?";
+            try (PreparedStatement incrementStatement = this.connection.prepareStatement(query)){
+                incrementStatement.setInt(1, memberId);
+                incrementStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int getMembersWithSuspension(){
+        int memberID = 0;
+        try {
+            String query = "SELECT member_id FROM members WHERE suspension > 0";
+            try (PreparedStatement preparedStatement = this.connection.prepareStatement(query)){
+                try (ResultSet resultSet = preparedStatement.executeQuery()){
+                    if (resultSet.next()){
+                        memberID = resultSet.getInt("member_id");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return memberID;
+    }
+
+
+
+
+    public void setCurrentlySuspended(int memberId){
+        try {
+            String query = "UPDATE members SET currently_suspended = 1 WHERE member_id = ?";
+            try (PreparedStatement incrementStatement = this.connection.prepareStatement(query)){
+                incrementStatement.setInt(1, memberId);
+                incrementStatement.executeUpdate();
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void removeCurrentlySuspended(int memberId){
+        try {
+            String query = "UPDATE members SET currently_suspended = 0 WHERE member_id = ?";
+            try (PreparedStatement incrementStatement = this.connection.prepareStatement(query)){
+                incrementStatement.setInt(1, memberId);
+                incrementStatement.executeUpdate();
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public boolean isCurrentlySuspended(int memberId) {
+        boolean hasRows = false;
+        try {
+            String query = "SELECT currently_suspended FROM members WHERE member_id = ?";
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+            preparedStatement.setLong(1, memberId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                hasRows = true;
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage() + "could not get data about member with memberID: " + memberId);
+        }
+        return hasRows;
+    }
+
 
 }

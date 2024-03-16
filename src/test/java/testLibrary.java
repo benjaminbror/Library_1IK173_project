@@ -42,7 +42,7 @@ public class testLibrary {
     }
 
     @Test
-    public void testRegister_isMember(){
+    public void testRegister_existingMember(){
         DatabaseManager databaseManager = new DatabaseManager();
         Library library = new Library(databaseManager);
         Member newMember = new Member("Test", "Testsson", 123321, 123, 3);
@@ -57,11 +57,9 @@ public class testLibrary {
         Library library = new Library(mockDatabaseManager);
 
         Member newMember = new Member("Test", "Testsson", 123321, 123, 3);
-        mockDatabaseManager.registerMember(newMember);
 
-        when(mockDatabaseManager.isMember(123)).thenReturn(true);
-
-        assertEquals(true, mockDatabaseManager.isMember(123));
-
+        assertEquals(3,library.registerMember(newMember));
     }
+
+
 }

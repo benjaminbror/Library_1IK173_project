@@ -302,3 +302,43 @@
 2024-03-16 07:27:48,337 INFO Main [main] Starting
 2024-03-16 07:36:14,907 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, max_num_books, current_num_books) VALUES('Test','Testsson',123321,123,3,0)
 2024-03-16 07:36:14,909 INFO DatabaseManager [main] Test was registered correctly! 
+2024-03-16 10:27:43,306 INFO Main [main] Starting
+2024-03-16 10:28:30,506 INFO Main [main] Starting
+2024-03-16 10:28:57,125 INFO Main [main] Starting
+2024-03-16 10:29:32,106 INFO Main [main] Starting
+2024-03-16 10:29:33,456 INFO Main [main] Starting
+2024-03-16 10:31:28,895 INFO Main [main] Starting
+2024-03-16 10:31:30,233 INFO Main [main] Starting
+2024-03-16 10:32:33,971 INFO Main [main] Starting
+2024-03-16 10:43:56,946 INFO Main [main] Starting
+2024-03-16 10:43:58,306 INFO Main [main] Starting
+2024-03-16 10:44:24,908 INFO Main [main] Starting
+2024-03-16 10:44:26,270 INFO Main [main] Starting
+2024-03-16 10:45:12,174 INFO Main [main] Starting
+2024-03-16 10:45:13,529 INFO Main [main] Starting
+2024-03-16 10:46:46,663 INFO Main [main] Starting
+2024-03-16 10:47:37,855 INFO Main [main] Starting
+2024-03-16 10:47:48,718 INFO Main [main] Starting
+2024-03-16 10:48:19,483 INFO Main [main] Starting
+2024-03-16 10:48:46,200 INFO Main [main] Starting
+2024-03-16 10:48:47,551 INFO Main [main] Starting
+2024-03-16 10:58:37,514 INFO Main [main] Starting
+2024-03-16 10:58:38,877 INFO Main [main] Starting
+2024-03-16 10:58:45,970 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, max_num_books, current_num_books) VALUES('Benjamin','Brorsson',9910082073,3813,7,0)
+2024-03-16 10:58:45,970 INFO DatabaseManager [main] Benjamin was registered correctly! 
+2024-03-16 11:00:56,885 INFO Main [main] Starting
+2024-03-16 11:01:13,393 INFO Main [main] Starting
+2024-03-16 11:02:27,936 INFO Main [main] Starting
+2024-03-16 11:02:29,297 INFO Main [main] Starting
+2024-03-16 11:09:04,729 INFO Main [main] Starting
+2024-03-16 11:09:06,075 INFO Main [main] Starting
+2024-03-16 11:13:39,856 INFO Main [main] Starting
+2024-03-16 11:15:25,393 INFO Main [main] Starting
+2024-03-16 11:15:26,745 INFO Main [main] Starting
+2024-03-16 11:16:41,808 INFO Main [main] Starting
+2024-03-16 11:16:43,151 INFO Main [main] Starting
+2024-03-16 11:21:06,811 INFO Main [main] Starting
+2024-03-16 11:21:08,417 INFO Main [main] Starting
+2024-03-16 11:21:22,161 INFO Main [main] Starting
+2024-03-16 11:24:38,419 INFO Main [main] Starting
+2024-03-16 11:24:39,802 INFO Main [main] Starting
