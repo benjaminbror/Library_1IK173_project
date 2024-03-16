@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.Random;
 
 
@@ -58,6 +59,54 @@ public class Library {
             return 2;
         } else
         return 3;
+    }
+
+    public int loanBook(int memberId, String titel) {
+        int isbn = databaseManager.getISBN(titel);
+        if (!databaseManager.isMember(memberId)) {
+            return 1;
+        }
+        if (!databaseManager.isBookAvailable(isbn)) {
+            return 2;
+        }
+        if (!databaseManager.isSuspended(memberId)) {
+            return 3;
+        }
+        int booksLoaned = databaseManager.getNumOfLoans(memberId);
+        int maxBooks = databaseManager.getMaxNumOfLoans(memberId);
+        if (booksLoaned >= maxBooks) {
+            return 4;
+        } else {
+            databaseManager.loanBook(titel, memberId);
+            databaseManager.decrementAvailableCopies(isbn);
+            databaseManager.incrementCurrentNumBooks(memberId);
+            return 5;
+        }
+
+
+    }
+
+    public int returnBook(int memberId, int isbn) {
+        LocalDate loanDate = databaseManager.getLoanDate(memberId, isbn);
+        if (!databaseManager.isMember(memberId)) { //inte medlem
+            return 1;
+        }
+        if (!databaseManager.isBookAvailable(isbn)) { //inte rätt metod, behöver en som kollar om boken finns i systemet
+            return 2; //bok finns ej
+        }
+        if (databaseManager.isDate15DaysAgo(loanDate)) {
+            databaseManager.incrementViolations(memberId);
+            databaseManager.returnBook(memberId, isbn);
+            databaseManager.decrementCurrentNumBooks(memberId);
+            databaseManager.incrementAvailableCopies(isbn);
+            return 3; //medlem finns, bok finns, men över belånad datum
+        } else {
+            databaseManager.returnBook(memberId, isbn);
+            databaseManager.decrementCurrentNumBooks(memberId);
+            databaseManager.incrementAvailableCopies(isbn);
+            return 4; //vanlig return
+        }
+
     }
 
     public int generateMemberID(int educationLevel) {
