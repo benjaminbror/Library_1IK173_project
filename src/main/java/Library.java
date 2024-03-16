@@ -75,7 +75,7 @@ public class Library {
         if (!databaseManager.isBookAvailable(isbn)) {
             return 3;
         }
-        if (!databaseManager.isCurrentlySuspended(memberId)) { //tog bort !databaseManager.isSuspended(memberId) då den använder personnummer
+        if (databaseManager.isCurrentlySuspended(memberId)) { //tog bort !databaseManager.isSuspended(memberId) då den använder personnummer
             return 4;
         }
         if (databaseManager.getLoansOfCopy(memberId, isbn) > 0) { //La till denna så man ej kan låna fler än 1 copy av varje bok
@@ -158,7 +158,7 @@ public class Library {
     public int unsuspendMember(int memberID) {
         LocalDate currentDate = LocalDate.now();
         LocalDate endDate = databaseManager.getSuspensionEndDate(memberID);
-        if (currentDate.isEqual(endDate)) {
+        if (currentDate.isEqual(endDate) || currentDate.isAfter(endDate)) {
             databaseManager.resetCurrentSuspension(memberID);
             return 1;
         } else

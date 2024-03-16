@@ -22,7 +22,6 @@ public class DatabaseManager {
 
         } catch (Exception e) {
             logger.error(e.getMessage() + " Could not connect to database.");
-            e.printStackTrace();
         }
     }
 
@@ -80,20 +79,20 @@ public class DatabaseManager {
 
 
     public boolean isCurrentlySuspended(int memberId) {
-        boolean hasRows = false;
+        boolean currentlySuspended = false;
         try {
             String query = "SELECT currently_suspended FROM members WHERE member_id = ?";
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
             preparedStatement.setLong(1, memberId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            while (resultSet.next()) {
-                hasRows = true;
+            if (resultSet.next()){
+                currentlySuspended = resultSet.getBoolean(1);
             }
         } catch (Exception e) {
             logger.error(e.getMessage() + "could not get data about member with memberID: " + memberId);
         }
-        return hasRows;
+        return currentlySuspended;
     }
 
     public void registerMember(Member member) {
@@ -114,7 +113,6 @@ public class DatabaseManager {
             logger.info(member.getFirstName() + " was registered correctly! ");
 
         } catch (Exception e) {
-            //e.printStackTrace();
             String logMsg = String.format("Member was not added properly!. Member id=%d, ExMsg=%s",
                     member.getMemberID(), e.getStackTrace());
             logger.error(logMsg);
@@ -187,24 +185,8 @@ public class DatabaseManager {
     }
 
 
-    /*public void suspendMember(int memberId){
-
-        try{
-            String query = "UPDATE members SET suspension_start_date = CURRENT_DATE, suspension_end_date = CURRENT_DATE + INTERVAL 15 DAY, suspension = suspension + 1 WHERE member_id = ?";
-
-            try (PreparedStatement suspendStatement = this.connection.prepareStatement(query)){
-                suspendStatement.setInt(1, memberId);
-                suspendStatement.executeUpdate();
-            }
-        } catch (Exception e) {
-            logger.error(e.getMessage() + "member with memberID: " + memberId + " was not suspended properly.");
-        }
-    }*/
-
-
     public void setCurrentlySuspended(int memberId){
         try {
-            //String query = "UPDATE members SET currently_suspended = 1 WHERE member_id = ?";
             String query = "UPDATE members SET suspension_start_date = CURRENT_DATE, suspension_end_date = CURRENT_DATE + INTERVAL 15 DAY, currently_suspended = 1 WHERE member_id = ?";
 
             try (PreparedStatement incrementStatement = this.connection.prepareStatement(query)){
@@ -212,8 +194,8 @@ public class DatabaseManager {
                 incrementStatement.executeUpdate();
 
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            logger.error(e.getMessage() + "member with memberID: " + memberId + " was not suspended properly by using currentlySuspended method.");
         }
     }
 
@@ -401,8 +383,8 @@ public class DatabaseManager {
                     }
                 }
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            logger.error(e.getMessage() + " error with getting book with ISBN: " + isbn);
         }
         return exists;
      }

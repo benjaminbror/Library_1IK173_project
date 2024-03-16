@@ -104,34 +104,10 @@ public class Main {
                 case 3:
                     //Register
                     Scanner registrationInput = new Scanner(System.in);
-
-                    String fname = "";
-                    boolean validFName = false;
-
-                    while (!validFName) {
-                        System.out.println("Enter your first name:");
-                            fname = registrationInput.nextLine();
-                            if (fname.matches("[a-zA-Z]+") || fname.length() <= 2) {
-                                validFName = true;
-                            } else {
-                                System.out.println("\033[0;33mEnter a valid firstname! \033[0m");
-                                System.out.println("------------------------------");
-                            }
-                    }
-
-                    String lname = "";
-                    boolean validLName = false;
-
-                    while (!validLName){
-                        System.out.println("Enter your last name: ");
-                            lname = registrationInput.nextLine();
-                            if (lname.matches("[a-zA-Z]+") || lname.length() <= 2) {
-                                validLName = true;
-                            } else{
-                                System.out.println("\033[0;33mEnter a valid lastname! \033[0m");
-                                System.out.println("------------------------------");
-                            }
-                    }
+                    System.out.println("Enter your first name:");
+                    String fname = registrationInput.nextLine();
+                    System.out.println("Enter your last name: ");
+                    String lname = registrationInput.nextLine();
 
                     long pnr = 0;
                     boolean validPnr = false;
@@ -246,7 +222,6 @@ public class Main {
                             System.out.println("\033[0;32mMember with memberID: " + memberIdToDelete2 + " has been deleted \033[0m");
                             System.out.println("------------------------------");
                         }
-
                     }else{
                         System.out.println("Invalid option");
                     }
@@ -261,10 +236,10 @@ public class Main {
 
                     int suspendResult = library.unsuspendMember(memb);
                     if (suspendResult == 1){
-                        System.out.println("\033[0;32mPassed suspensions found and deleted! \033[0m");
+                        System.out.println("\033[0;32mExpired suspensions found and deleted! \033[0m");
                         System.out.println("------------------------------");
                     } else{
-                        System.out.println("\033[0;33mNo passed suspensions were found! \033[0m");
+                        System.out.println("\033[0;33mNo expired suspensions were found! \033[0m");
                         System.out.println("------------------------------");
                     }
                     break;
@@ -273,6 +248,7 @@ public class Main {
                     //Exit
                     System.out.println("Exiting the program..");
                     System.exit(0);
+
 
                     break;
                 default:
