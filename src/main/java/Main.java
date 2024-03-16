@@ -38,17 +38,69 @@ public class Main {
 
             switch (option){
                 case 1:
-                    System.out.println("Enter the title of the book you want to borrow: ");
-                    System.out.println("Enter memberID: ");
-
                     //Loan
+                    Scanner inputLoan = new Scanner(System.in);
+                    System.out.println("Enter the title of the book you want to borrow: ");
+                    String title = inputLoan.nextLine();
+                    System.out.println("Enter memberID: ");
+                    int memberID = inputLoan.nextInt();
+
+                    int loanResult = library.loanBook(memberID,title);
+
+                    if (loanResult == 1){
+                        System.out.println("\033[0;31mMember not found! \033[0m");
+                        System.out.println("------------------------------");
+                    } else if (loanResult == 2) {
+                        System.out.println("\033[0;33mBook does not exist! \033[0m");
+                        System.out.println("------------------------------");
+                    } else if (loanResult == 3) {
+                        System.out.println("\033[0;33mNot enough copies of this book! \033[0m");
+                        System.out.println("------------------------------");
+                    } else if (loanResult == 4){
+                        System.out.println("\033[0;33mMember is suspended! \033[0m");
+                        System.out.println("------------------------------");
+                    } else if (loanResult == 5){
+                        System.out.println("\033[0;33mMember already has a loan of this copy! \033[0m");
+                        System.out.println("------------------------------");
+                    } else if (loanResult == 6){
+                        System.out.println("\033[0;33mMember has reached the maximum number of loans! \033[0m");
+                        System.out.println("------------------------------");
+                    } else{
+                        System.out.println("\033[0;32mBook with title: " + title + " has been loaned to memberID: " + memberID + " \033[0m");
+                        System.out.println("------------------------------");
+                    }
+
                     break;
                 case 2:
                     //Return
+                    Scanner inputReturn = new Scanner(System.in);
+                    System.out.println("Enter your memberID: ");
+                    int memberId = inputReturn.nextInt();
+                    System.out.println("Enter ISBN of the book you want to borrow!");
+                    int isbn = inputReturn.nextInt();
+
+                    int returnResult = library.returnBook(memberId, isbn);
+                    if (returnResult == 1){
+                        System.out.println("\033[0;31mMember not found! \033[0m");
+                        System.out.println("------------------------------");
+                    } else if (returnResult == 2){
+                        System.out.println("\033[0;33mBook does not exist \033[0m");
+                        System.out.println("------------------------------");
+                    } else if (returnResult == 3) {
+                        System.out.println("\033[0;33mSUSPENSION COUNT ABOVE 3 for memberID: " + memberId + " \033[0m");
+                        System.out.println("------------------------------");
+                    } else if (returnResult == 4){
+                        System.out.println("\033[0;33mReturn is delayed! Book with ISBN: " + isbn + " has been returned and violation has been added for memberID: " + memberId + " \033[0m");
+                        System.out.println("------------------------------");
+                    } else {
+                        System.out.println("\033[0;32mReturn is on time. Book with ISBN: " + isbn + " has been returned  by member with memberID:  " + memberId + " \033[0m");
+                        System.out.println("------------------------------");
+                    }
 
 
                     break;
                 case 3:
+                    //Register
                     Scanner registrationInput = new Scanner(System.in);
 
                     String fname = "";
@@ -134,17 +186,17 @@ public class Main {
                     Scanner inputSuspension = new Scanner(System.in);
 
                     System.out.println("Enter memberID you want to suspend: ");
-                    int memberId = inputSuspension.nextInt();
+                    int memberid = inputSuspension.nextInt();
 
-                    int resultSuspend = library.suspendMember(memberId);
+                    int resultSuspend = library.suspendMember(memberid);
                     if (resultSuspend == 1){
                         System.out.println("\033[0;31mMember not found!\033[0m");
                         System.out.println("------------------------------");
                     }else if (resultSuspend == 2){
-                        System.out.println("\033[0;32mMember with memberID: " + memberId + " has been suspended! \033[0m");
+                        System.out.println("\033[0;32mMember with memberID: " + memberid + " has been suspended! \033[0m");
                         System.out.println("------------------------------");
                     }else{
-                        System.out.println("\033[0;33mCould not suspend member with memberID: " + memberId + " \033[0m");
+                        System.out.println("\033[0;33mMember with: " + memberid + " does not have 3 violations! \033[0m");
                         System.out.println("------------------------------");
                     }
 
@@ -200,8 +252,14 @@ public class Main {
 
 
                 case 6:
+                    //Unsuspend member
+
+                    break;
+                case 7:
+                    //Exit
                     System.out.println("Exiting the program..");
                     System.exit(0);
+
                     break;
                 default:
                     System.out.println("Please choose a valid option.");

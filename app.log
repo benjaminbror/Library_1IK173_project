@@ -219,3 +219,86 @@
 2024-03-15 21:00:57,203 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, max_num_books, current_num_books) VALUES('be','bro',9910052083,3855,7,0)
 2024-03-15 21:00:57,203 INFO DatabaseManager [main] be was registered correctly! 
 2024-03-15 21:07:40,722 INFO Main [main] Starting
+2024-03-16 06:03:39,952 INFO Main [main] Starting
+2024-03-16 06:07:47,606 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, max_num_books, current_num_books) VALUES('benjamin','brorsson',9910082073,1480,3,0)
+2024-03-16 06:07:47,606 INFO DatabaseManager [main] benjamin was registered correctly! 
+2024-03-16 06:10:59,720 INFO Main [main] Starting
+2024-03-16 06:11:06,518 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO loans (member_id, isbn, loan_date) VALUES (1480, 123456, '2024-03-16')
+2024-03-16 06:11:06,519 INFO DatabaseManager [main] Book with title: book 1 was borrowed successfully by member with memberID: 1480
+2024-03-16 06:22:37,341 INFO Main [main] Starting
+2024-03-16 06:22:57,415 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: DELETE FROM loans WHERE member_id = 1480 AND isbn = 123456
+2024-03-16 06:22:57,416 INFO DatabaseManager [main] Book with 123456 and memberID: 1480 was returned sucessfully
+2024-03-16 06:23:38,148 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO loans (member_id, isbn, loan_date) VALUES (1480, 123456, '2024-03-16')
+2024-03-16 06:23:38,149 INFO DatabaseManager [main] Book with title: book 1 was borrowed successfully by member with memberID: 1480
+2024-03-16 06:23:42,384 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO loans (member_id, isbn, loan_date) VALUES (1480, 123456, '2024-03-16')
+2024-03-16 06:23:42,384 INFO DatabaseManager [main] Book with title: book 1 was borrowed successfully by member with memberID: 1480
+2024-03-16 06:24:56,983 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: DELETE FROM loans WHERE member_id = 1480 AND isbn = 123456
+2024-03-16 06:24:56,983 INFO DatabaseManager [main] Book with 123456 and memberID: 1480 was returned sucessfully
+2024-03-16 06:26:50,335 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO loans (member_id, isbn, loan_date) VALUES (1480, 123456, '2024-03-16')
+2024-03-16 06:26:50,335 INFO DatabaseManager [main] Book with title: book 1 was borrowed successfully by member with memberID: 1480
+2024-03-16 06:27:49,669 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: DELETE FROM loans WHERE member_id = 1480 AND isbn = 123456
+2024-03-16 06:27:49,669 INFO DatabaseManager [main] Book with 123456 and memberID: 1480 was returned sucessfully
+2024-03-16 06:28:06,166 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO loans (member_id, isbn, loan_date) VALUES (1480, 123456, '2024-03-16')
+2024-03-16 06:28:06,166 INFO DatabaseManager [main] Book with title: book 1 was borrowed successfully by member with memberID: 1480
+2024-03-16 06:28:43,547 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: DELETE FROM loans WHERE member_id = 1480 AND isbn = 123456
+2024-03-16 06:28:43,547 INFO DatabaseManager [main] Book with 123456 and memberID: 1480 was returned sucessfully
+2024-03-16 06:32:12,502 INFO Main [main] Starting
+2024-03-16 06:32:25,781 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO loans (member_id, isbn, loan_date) VALUES (1480, 123456, '2024-03-16')
+2024-03-16 06:32:25,782 INFO DatabaseManager [main] Book with title: book 1 was borrowed successfully by member with memberID: 1480
+2024-03-16 06:32:48,427 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: DELETE FROM loans WHERE member_id = 1480 AND isbn = 123456
+2024-03-16 06:32:48,428 INFO DatabaseManager [main] Book with 123456 and memberID: 1480 was returned sucessfully
+2024-03-16 06:33:17,402 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO loans (member_id, isbn, loan_date) VALUES (1480, 123456, '2024-03-16')
+2024-03-16 06:33:17,402 INFO DatabaseManager [main] Book with title: book 1 was borrowed successfully by member with memberID: 1480
+2024-03-16 06:34:35,048 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: DELETE FROM loans WHERE member_id = 1480 AND isbn = 123456
+2024-03-16 06:34:35,048 INFO DatabaseManager [main] Book with 123456 and memberID: 1480 was returned sucessfully
+2024-03-16 06:36:12,373 INFO Main [main] Starting
+2024-03-16 06:37:02,602 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO loans (member_id, isbn, loan_date) VALUES (1480, 123456, '2024-03-16')
+2024-03-16 06:37:02,604 INFO DatabaseManager [main] Book with title: book 1 was borrowed successfully by member with memberID: 1480
+2024-03-16 06:37:20,606 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: DELETE FROM loans WHERE member_id = 1480 AND isbn = 123456
+2024-03-16 06:37:20,607 INFO DatabaseManager [main] Book with 123456 and memberID: 1480 was returned sucessfully
+2024-03-16 06:38:36,518 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO loans (member_id, isbn, loan_date) VALUES (1480, 123456, '2024-03-16')
+2024-03-16 06:38:36,518 INFO DatabaseManager [main] Book with title: book 1 was borrowed successfully by member with memberID: 1480
+2024-03-16 06:38:51,805 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: DELETE FROM loans WHERE member_id = 1480 AND isbn = 123456
+2024-03-16 06:38:51,805 INFO DatabaseManager [main] Book with 123456 and memberID: 1480 was returned sucessfully
+2024-03-16 06:39:22,420 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO loans (member_id, isbn, loan_date) VALUES (1480, 123456, '2024-03-16')
+2024-03-16 06:39:22,421 INFO DatabaseManager [main] Book with title: book 1 was borrowed successfully by member with memberID: 1480
+2024-03-16 06:39:43,297 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: DELETE FROM loans WHERE member_id = 1480 AND isbn = 123456
+2024-03-16 06:39:43,298 INFO DatabaseManager [main] Book with 123456 and memberID: 1480 was returned sucessfully
+2024-03-16 06:40:11,852 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO loans (member_id, isbn, loan_date) VALUES (1480, 123456, '2024-03-16')
+2024-03-16 06:40:11,852 INFO DatabaseManager [main] Book with title: book 1 was borrowed successfully by member with memberID: 1480
+2024-03-16 06:40:23,948 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: DELETE FROM loans WHERE member_id = 1480 AND isbn = 123456
+2024-03-16 06:40:23,948 INFO DatabaseManager [main] Book with 123456 and memberID: 1480 was returned sucessfully
+2024-03-16 06:52:16,370 INFO Main [main] Starting
+2024-03-16 06:52:38,637 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO loans (member_id, isbn, loan_date) VALUES (1480, 123456, '2024-03-16')
+2024-03-16 06:52:38,638 INFO DatabaseManager [main] Book with title: book 1 was borrowed successfully by member with memberID: 1480
+2024-03-16 06:53:16,305 INFO Main [main] Starting
+2024-03-16 06:55:45,827 INFO Main [main] Starting
+2024-03-16 06:56:07,295 INFO Main [main] Starting
+2024-03-16 06:59:41,114 INFO Main [main] Starting
+2024-03-16 06:59:42,459 INFO Main [main] Starting
+2024-03-16 06:59:58,530 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO loans (member_id, isbn, loan_date) VALUES (1480, 234567, '2024-03-16')
+2024-03-16 06:59:58,531 INFO DatabaseManager [main] Book with title: book 2 was borrowed successfully by member with memberID: 1480
+2024-03-16 07:06:43,184 INFO Main [main] Starting
+2024-03-16 07:06:44,655 INFO Main [main] Starting
+2024-03-16 07:07:01,062 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: DELETE FROM loans WHERE member_id = 1480 AND isbn = 123456
+2024-03-16 07:07:01,063 INFO DatabaseManager [main] Book with 123456 and memberID: 1480 was returned sucessfully
+2024-03-16 07:07:28,746 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: DELETE FROM loans WHERE member_id = 1480 AND isbn = 234567
+2024-03-16 07:07:28,746 INFO DatabaseManager [main] Book with 234567 and memberID: 1480 was returned sucessfully
+2024-03-16 07:08:26,435 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO loans (member_id, isbn, loan_date) VALUES (1480, 123456, '2024-03-16')
+2024-03-16 07:08:26,436 INFO DatabaseManager [main] Book with title: book 1 was borrowed successfully by member with memberID: 1480
+2024-03-16 07:09:12,987 INFO Main [main] Starting
+2024-03-16 07:09:14,317 INFO Main [main] Starting
+2024-03-16 07:09:30,070 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: DELETE FROM loans WHERE member_id = 1480 AND isbn = 123456
+2024-03-16 07:09:30,071 INFO DatabaseManager [main] Book with 123456 and memberID: 1480 was returned sucessfully
+2024-03-16 07:10:11,836 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, max_num_books, current_num_books) VALUES('ben','bro',9910082083,1574,3,0)
+2024-03-16 07:10:11,836 INFO DatabaseManager [main] ben was registered correctly! 
+2024-03-16 07:13:49,879 INFO Main [main] Starting
+2024-03-16 07:13:55,973 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO loans (member_id, isbn, loan_date) VALUES (1574, 123456, '2024-03-16')
+2024-03-16 07:13:55,974 INFO DatabaseManager [main] Book with title: book 1 was borrowed successfully by member with memberID: 1574
+2024-03-16 07:17:01,164 INFO Main [main] Starting
+2024-03-16 07:22:58,859 INFO Main [main] Starting
+2024-03-16 07:23:00,219 INFO Main [main] Starting
+2024-03-16 07:24:22,476 INFO Main [main] Starting
+2024-03-16 07:27:48,337 INFO Main [main] Starting
+2024-03-16 07:36:14,907 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, max_num_books, current_num_books) VALUES('Test','Testsson',123321,123,3,0)
+2024-03-16 07:36:14,909 INFO DatabaseManager [main] Test was registered correctly! 

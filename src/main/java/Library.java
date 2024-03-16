@@ -67,24 +67,28 @@ public class Library {
         if (!databaseManager.isMember(memberId)) {
             return 1;
         }
-        if (!databaseManager.isBookAvailable(isbn)) {
+        if (!databaseManager.doesBookExist(isbn)){ //La till denna för att se om boken finns
             return 2;
         }
-        if (!databaseManager.isSuspended(memberId)) {
+        if (!databaseManager.isBookAvailable(isbn)) {
             return 3;
+        }
+        if (databaseManager.getSuspensionCount(memberId) > 0) { //tog bort !databaseManager.isSuspended(memberId) då den använder personnummer
+            return 4;
+        }
+        if (databaseManager.getLoansOfCopy(memberId, isbn) > 0){ //La till denna så man ej kan låna fler än 1 copy av varje bok
+            return 5;
         }
         int booksLoaned = databaseManager.getNumOfLoans(memberId);
         int maxBooks = databaseManager.getMaxNumOfLoans(memberId);
         if (booksLoaned >= maxBooks) {
-            return 4;
+            return 6;
         } else {
             databaseManager.loanBook(titel, memberId);
             databaseManager.decrementAvailableCopies(isbn);
             databaseManager.incrementCurrentNumBooks(memberId);
-            return 5;
+            return 7;
         }
-
-
     }
 
     public int returnBook(int memberId, int isbn) {
@@ -92,20 +96,24 @@ public class Library {
         if (!databaseManager.isMember(memberId)) { //inte medlem
             return 1;
         }
-        if (!databaseManager.isBookAvailable(isbn)) { //inte rätt metod, behöver en som kollar om boken finns i systemet
+        if (!databaseManager.doesBookExist(isbn)) { //inte rätt metod, behöver en som kollar om boken finns i systemet
             return 2; //bok finns ej
+            //Denna är löst nu med ny metod
         }
         if (databaseManager.isDate15DaysAgo(loanDate)) {
             databaseManager.incrementViolations(memberId);
             databaseManager.returnBook(memberId, isbn);
             databaseManager.decrementCurrentNumBooks(memberId);
             databaseManager.incrementAvailableCopies(isbn);
-            return 3; //medlem finns, bok finns, men över belånad datum
+            if (databaseManager.getNumOfViolations(memberId) > 3){ //La till denna så vi kan printa att member ska suspendas när han har 3 violations
+                return 3;
+            }
+            return 4; //medlem finns, bok finns, men över belånad datum
         } else {
             databaseManager.returnBook(memberId, isbn);
             databaseManager.decrementCurrentNumBooks(memberId);
             databaseManager.incrementAvailableCopies(isbn);
-            return 4; //vanlig return
+            return 5; //vanlig return
         }
 
     }

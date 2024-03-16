@@ -15,4 +15,53 @@ public class testLibrary {
         int expected = 3;
         assertEquals(expected, result);
     }
+
+    @Test
+    public void setMemberMaxBooks_boundary(){
+        DatabaseManager databaseManager = new DatabaseManager();
+        Library library = new Library(databaseManager);
+
+        int education_level = 5;
+        int result = library.setMemberMaxBooks(education_level);
+
+        int expected = 0;
+        assertEquals(expected, result);
+    }
+
+
+
+    @Test
+    public void testRegister(){
+        DatabaseManager databaseManager = new DatabaseManager();
+        Library library = new Library(databaseManager);
+
+        Member newMember = new Member("Test", "Testsson", 123321, 123, 3);
+        int result = library.registerMember(newMember);
+
+        assertEquals(3, result);
+    }
+
+    @Test
+    public void testRegister_isMember(){
+        DatabaseManager databaseManager = new DatabaseManager();
+        Library library = new Library(databaseManager);
+        Member newMember = new Member("Test", "Testsson", 123321, 123, 3);
+        int result = library.registerMember(newMember);
+
+        assertEquals(1, result);
+    }
+
+    @Test
+    public void testRegister_Mockito(){
+        DatabaseManager mockDatabaseManager = mock(DatabaseManager.class);
+        Library library = new Library(mockDatabaseManager);
+
+        Member newMember = new Member("Test", "Testsson", 123321, 123, 3);
+        mockDatabaseManager.registerMember(newMember);
+
+        when(mockDatabaseManager.isMember(123)).thenReturn(true);
+
+        assertEquals(true, mockDatabaseManager.isMember(123));
+
+    }
 }

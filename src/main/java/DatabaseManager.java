@@ -365,9 +365,28 @@ public class DatabaseManager {
         }
      }
 
+     public boolean doesBookExist(int isbn){
+        boolean exists = false;
+        try {
+            String query = "SELECT isbn FROM books where isbn = ?";
+
+            try (PreparedStatement existsStatement = this.connection.prepareStatement(query)){
+                existsStatement.setInt(1,isbn);
+                try (ResultSet resultSet = existsStatement.executeQuery()){
+                    if (resultSet.next()){
+                        exists = resultSet.getBoolean(1);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return exists;
+     }
 
 
-    /** Loan book */
+
+    /** Return book */
 
     public void returnBook(int memberID, int isbn){
         try {
@@ -450,6 +469,29 @@ public class DatabaseManager {
             logger.error(e.getMessage() + " could not get loanDate for MemberID : " + memberId + " and ISBN: " + isbn);
         }
         return loanDate;
+    }
+
+    public int getLoansOfCopy (int memberId, int isbn){
+        int loansOfCopy = 0;
+        try {
+            //String query = "SELECT loan_id FROM loans WHERE member_id = ? AND isbn = ?";
+            String query = "SELECT COUNT(*) as count FROM loans WHERE member_id = ? AND isbn = ?";
+
+            try (PreparedStatement hasCopyStatement = this.connection.prepareStatement(query)){
+
+                hasCopyStatement.setInt(1, memberId);
+                hasCopyStatement.setInt(2, isbn);
+
+                try (ResultSet resultSet = hasCopyStatement.executeQuery()){
+                    if (resultSet.next()){
+                        loansOfCopy = resultSet.getInt("count");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return loansOfCopy;
     }
 
     /** Extra method */
