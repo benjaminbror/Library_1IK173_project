@@ -1,28 +1,15 @@
-
 import java.time.LocalDate;
 import java.util.Scanner;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 
 public class Main {
-    private static Logger logger = LogManager.getLogger("Main");
-    private Library library;
 
-        public Main(Library library) {
-            this.library = library;
-        }
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        logger.info("Starting");
 
         DatabaseManager databaseManager = new DatabaseManager();
         Library library = new Library(databaseManager);
 
-
         while (true){
-
-            //
 
             System.out.println("1. Register a loan");
             System.out.println("2. Register a return");
@@ -34,9 +21,7 @@ public class Main {
             System.out.println("========================");
             System.out.println("Choose an option:");
 
-
             int option = input.nextInt();
-
 
             switch (option){
                 case 1:
@@ -68,7 +53,9 @@ public class Main {
                         System.out.println("\033[0;33mMember has reached the maximum number of loans! \033[0m");
                         System.out.println("------------------------------");
                     } else{
+                        LocalDate dateToReturn = LocalDate.now().plusDays(15);
                         System.out.println("\033[0;32mBook with title: " + title + " has been loaned to memberID: " + memberID + " \033[0m");
+                        System.out.println("\033[0;32mLatest return date: " + dateToReturn + " \033[0m");
                         System.out.println("------------------------------");
                     }
 
@@ -78,7 +65,7 @@ public class Main {
                     Scanner inputReturn = new Scanner(System.in);
                     System.out.println("Enter your memberID: ");
                     int memberId = inputReturn.nextInt();
-                    System.out.println("Enter ISBN of the book you want to borrow!");
+                    System.out.println("Enter ISBN of the book you want to return: ");
                     int isbn = inputReturn.nextInt();
 
                     int returnResult = library.returnBook(memberId, isbn);
@@ -89,10 +76,14 @@ public class Main {
                         System.out.println("\033[0;33mBook does not exist \033[0m");
                         System.out.println("------------------------------");
                     } else if (returnResult == 3) {
+                        System.out.println("\033[0;33mReturn is delayed! Book with ISBN: " + isbn + " has been returned and violation has been added for memberID: " + memberId + " \033[0m");
                         System.out.println("\033[0;33mViolationcount is 3 for memberID: " + memberId + " please suspend member! \033[0m");
                         System.out.println("------------------------------");
                     } else if (returnResult == 4){
                         System.out.println("\033[0;33mReturn is delayed! Book with ISBN: " + isbn + " has been returned and violation has been added for memberID: " + memberId + " \033[0m");
+                        System.out.println("------------------------------");
+                    } else if (returnResult == -1){
+                        System.out.println("\033[0;33mCannot return book with ISBN: " +isbn + " because no loans were found for member with memberID: " + memberId + " \033[0m");
                         System.out.println("------------------------------");
                     } else {
                         System.out.println("\033[0;32mReturn is on time. Book with ISBN: " + isbn + " has been returned  by member with memberID:  " + memberId + " \033[0m");
@@ -168,13 +159,14 @@ public class Main {
 
                     int resultSuspend = library.suspendMember(memberid);
                     if (resultSuspend == 1){
-                        System.out.println("\033[0;31mMember not found!\033[0m");
+                        System.out.println("\033[0;31mMember with memberID: " + memberid + " not found!\033[0m");
                         System.out.println("------------------------------");
                     }else if (resultSuspend == 2){
-                        System.out.println("\033[0;32mMember with memberID: " + memberid + " has been suspended! \033[0m");
+                        LocalDate dateIn15Days = LocalDate.now().plusDays(15);
+                        System.out.println("\033[0;32mMember with memberID: " + memberid + " has been suspended until " + dateIn15Days + "  \033[0m");
                         System.out.println("------------------------------");
                     }else{
-                        System.out.println("\033[0;33mMember with: " + memberid + " does not have 3 violations! \033[0m");
+                        System.out.println("\033[0;33mMember with: " + memberid + " does not have more than 2 violations! \033[0m");
                         System.out.println("------------------------------");
                     }
 
@@ -188,8 +180,9 @@ public class Main {
                     int option2 = inputDeletion.nextInt();
 
                     if (option2 == 1){
+                        //Member application to delete
                         System.out.println("Enter the memberID you wish to delete: ");
-                        System.out.println("Member ID:");
+                        System.out.println("MemberID:");
                         int memberIdToDelete = inputDeletion.nextInt();
 
                         int resultDeleteApplication = library.deleteMember(memberIdToDelete);
@@ -197,33 +190,35 @@ public class Main {
                             System.out.println("\033[0;31mMember not found!\033[0m");
                             System.out.println("------------------------------");
                         }else if (resultDeleteApplication == 2){
-                            System.out.println("\033[0;33mCannot delete member due to an existing loan! \033[0m");
+                            System.out.println("\033[0;33mCannot delete member with memberID: " + memberIdToDelete + " due to an existing loan! \033[0m");
                             System.out.println("------------------------------");
                         }else {
-                            System.out.println("\033[0;32mMember found and deleted! \033[0m");
+                            System.out.println("\033[0;32mMember with memberID: " + memberIdToDelete + " found and deleted! \033[0m");
                             System.out.println("------------------------------");
                         }
 
                     }else if (option2 == 2){
-                        //Endast memberid
-                        System.out.println("Enter the memberID with more than 2 suspensions you wish to delete: ");
+                        //Member has too many suspensions
+                        System.out.println("Enter a memberID with more than 2 suspensions you wish to delete: ");
                         int memberIdToDelete2 = inputDeletion.nextInt();
                         int resultDelete = library.deleteSuspendedMember(memberIdToDelete2);
+
                         if (resultDelete == 1){
                             System.out.println("\033[0;31mMember with memberID: " + memberIdToDelete2 + " not found! \033[0m");
                             System.out.println("------------------------------");
                         }else if (resultDelete == 2){
-                            System.out.println("\033[0;33mMember has an existing loan! \033[0m");
+                            System.out.println("\033[0;33mMember with memberID: " + memberIdToDelete2 + " has an existing loan! \033[0m");
                             System.out.println("------------------------------");
                         } else if (resultDelete == 3) {
-                            System.out.println("\033[0;33mMember does not have more than 2 suspensions! \033[0m");
+                            System.out.println("\033[0;33mMember with memberID: " + memberIdToDelete2 + " does not have more than 2 suspensions! \033[0m");
                             System.out.println("------------------------------");
                         } else {
                             System.out.println("\033[0;32mMember with memberID: " + memberIdToDelete2 + " has been deleted \033[0m");
                             System.out.println("------------------------------");
                         }
                     }else{
-                        System.out.println("Invalid option");
+                        System.out.println("\033[0;31mInvalid option. \033[0m");
+                        System.out.println("------------------------------");
                     }
                     break;
 
@@ -232,33 +227,37 @@ public class Main {
                     //Unsuspend member
                     Scanner unsuspendInput = new Scanner(System.in);
                     System.out.println("Enter memberID:");
-                    int memb = unsuspendInput.nextInt();
+                    int memberidToUnsuspend = unsuspendInput.nextInt();
 
-                    int suspendResult = library.unsuspendMember(memb);
+                    int suspendResult = library.unsuspendMember(memberidToUnsuspend);
                     if (suspendResult == 1){
-                        System.out.println("\033[0;31mMember not found! \033[0m");
+                        System.out.println("\033[0;31mMember with memberID: " + memberidToUnsuspend + " not found! \033[0m");
                         System.out.println("------------------------------");
                     } else if (suspendResult == 2){
-                        System.out.println("\033[0;32mMember is currently not suspended! \033[0m");
+                        System.out.println("\033[0;33mMember with memberID: " + memberidToUnsuspend + " is currently not suspended! \033[0m");
                         System.out.println("------------------------------");
                     } else if (suspendResult == 3){
-                        System.out.println("\033[0;32mExpired suspensions found and deleted! \033[0m");
+                        System.out.println("\033[0;32mExpired suspensions found and deleted for member with memberID: " + memberidToUnsuspend + " \033[0m");
+                        System.out.println("------------------------------");
+                    } else if (suspendResult == -1){
+                        System.out.println("\033[0;32mExpired suspensions found and deleted for member with memberID: " + memberidToUnsuspend + " \033[0m");
+                        System.out.println("\033[0;31mSuspension count is above 2, please delete member with memberID: " + memberidToUnsuspend + " \033[0m");
                         System.out.println("------------------------------");
                     } else{
-                        System.out.println("\033[0;33mNo expired suspensions were found! \033[0m");
+                        System.out.println("\033[0;33mNo expired suspensions were found for member with memberID: " + memberidToUnsuspend + " \033[0m");
                         System.out.println("------------------------------");
                     }
                     break;
 
                 case 7:
                     //Exit
-                    System.out.println("Exiting the program..");
+                    System.out.println("\033[0;35mExiting the program.. \033[0m");
                     System.exit(0);
-
 
                     break;
                 default:
-                    System.out.println("Please choose a valid option.");
+                    System.out.println("\033[0;34mPlease choose a valid option. \033[0m");
+                    System.out.println("------------------------------");
 
             }
         }

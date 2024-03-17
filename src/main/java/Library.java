@@ -95,6 +95,10 @@ public class Library {
 
     public int returnBook(int memberId, int isbn) {
         LocalDate loanDate = databaseManager.getLoanDate(memberId, isbn);
+
+        if (databaseManager.getNumOfLoans(memberId) == 0){
+            return -1; //finns inga lån att returnera
+        }
         if (!databaseManager.isMember(memberId)) { //inte medlem
             return 1;
         }
@@ -166,11 +170,16 @@ public class Library {
         LocalDate endDate = databaseManager.getSuspensionEndDate(memberID);
         if (currentDate.isEqual(endDate) || currentDate.isAfter(endDate)) {
             databaseManager.resetCurrentSuspension(memberID);
+            if (databaseManager.getSuspensionCount(memberID) >= 3){
+                return -1;
+            }
             return 3;
         } else {
             return 4;
         }
     }
+
+
 
 
 }

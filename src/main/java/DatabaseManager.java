@@ -7,7 +7,6 @@ import java.util.Calendar;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.xml.transform.Result;
 
 public class DatabaseManager {
 
@@ -22,18 +21,6 @@ public class DatabaseManager {
 
         } catch (Exception e) {
             logger.error(e.getMessage() + " Could not connect to database.");
-        }
-    }
-
-    public void printBookTitles() {
-        try {
-            Statement statement = this.connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM books");
-            while (resultSet.next()) {
-                System.out.println(resultSet.getString("title"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -389,6 +376,29 @@ public class DatabaseManager {
         return exists;
      }
 
+    public int getLoansOfCopy (int memberId, int isbn){
+        int loansOfCopy = 0;
+        try {
+            //String query = "SELECT loan_id FROM loans WHERE member_id = ? AND isbn = ?";
+            String query = "SELECT COUNT(*) as count FROM loans WHERE member_id = ? AND isbn = ?";
+
+            try (PreparedStatement hasCopyStatement = this.connection.prepareStatement(query)){
+
+                hasCopyStatement.setInt(1, memberId);
+                hasCopyStatement.setInt(2, isbn);
+
+                try (ResultSet resultSet = hasCopyStatement.executeQuery()){
+                    if (resultSet.next()){
+                        loansOfCopy = resultSet.getInt("count");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return loansOfCopy;
+    }
+
 
 
     /** Return book */
@@ -454,7 +464,6 @@ public class DatabaseManager {
         Date firstLoanDate = null;
         LocalDate loanDate = null;
 
-
         try {
             String query = "SELECT loan_date FROM loans WHERE member_id = ? AND isbn = ?";
 
@@ -476,36 +485,14 @@ public class DatabaseManager {
         return loanDate;
     }
 
-    public int getLoansOfCopy (int memberId, int isbn){
-        int loansOfCopy = 0;
-        try {
-            //String query = "SELECT loan_id FROM loans WHERE member_id = ? AND isbn = ?";
-            String query = "SELECT COUNT(*) as count FROM loans WHERE member_id = ? AND isbn = ?";
-
-            try (PreparedStatement hasCopyStatement = this.connection.prepareStatement(query)){
-
-                hasCopyStatement.setInt(1, memberId);
-                hasCopyStatement.setInt(2, isbn);
-
-                try (ResultSet resultSet = hasCopyStatement.executeQuery()){
-                    if (resultSet.next()){
-                        loansOfCopy = resultSet.getInt("count");
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return loansOfCopy;
-    }
 
 
 
 
     /** Unsuspend member */
     public LocalDate getSuspensionEndDate(int member_id){
-        //Date firstEndDate = null;
-        LocalDate endDate = LocalDate.of(2020,01,01);
+        Date firstEndDate = null;
+        LocalDate endDate = null;
         try {
             String query = "SELECT suspension_end_date FROM members WHERE member_id = ?";
             try (PreparedStatement dateStatement = this.connection.prepareStatement(query)){
@@ -513,8 +500,8 @@ public class DatabaseManager {
                 dateStatement.setInt(1,member_id);
                 try (ResultSet resultSet = dateStatement.executeQuery()){
                     if (resultSet.next()){
-                        endDate = resultSet.getDate("suspension_end_date").toLocalDate();
-                        //endDate = firstEndDate.toLocalDate();
+                        firstEndDate = resultSet.getDate("suspension_end_date");
+                        endDate = firstEndDate.toLocalDate();
                     }
                 }
             }
@@ -545,6 +532,5 @@ public class DatabaseManager {
            return LocalDate.now().minusDays(15).isAfter(date);
        }
     }
-
 
 }

@@ -321,6 +321,7 @@ public class testLibrary {
         when(mockDatabaseManager.getLoanDate(123, 123456)).thenReturn(loanDate);
         when(mockDatabaseManager.isDate15DaysAgo(loanDate)).thenReturn(false);
         when(mockDatabaseManager.getNumOfViolations(123)).thenReturn(0);
+        when(mockDatabaseManager.getNumOfLoans(123)).thenReturn(1);
 
         int result = library.returnBook(123, 123456);
         assertEquals(5, result);
@@ -337,6 +338,7 @@ public class testLibrary {
         when(mockDatabaseManager.getLoanDate(123, 123456)).thenReturn(loanDate);
         when(mockDatabaseManager.isDate15DaysAgo(loanDate)).thenReturn(true);
         when(mockDatabaseManager.getNumOfViolations(123)).thenReturn(1);
+        when(mockDatabaseManager.getNumOfLoans(123)).thenReturn(1);
 
 
         int result = library.returnBook(123, 123456);
@@ -354,6 +356,7 @@ public class testLibrary {
         when(mockDatabaseManager.getLoanDate(123, 123456)).thenReturn(loanDate);
         when(mockDatabaseManager.isDate15DaysAgo(loanDate)).thenReturn(true);
         when(mockDatabaseManager.getNumOfViolations(123)).thenReturn(3);
+        when(mockDatabaseManager.getNumOfLoans(123)).thenReturn(1);
 
 
         int result = library.returnBook(123, 123456);
