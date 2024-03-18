@@ -59,6 +59,9 @@ public class Library {
             databaseManager.suspendMember(memberId);
             databaseManager.setCurrentlySuspended(memberId);
             databaseManager.resetViolations(memberId);
+            if (databaseManager.getSuspensionCount(memberId) >= 3){
+                return -1;
+            }
             return 2;
         } else
             return 3;

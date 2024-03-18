@@ -41,7 +41,7 @@ public class DatabaseManager {
                 hasRows = true;
             }
         } catch (Exception e) {
-            logger.error(e.getMessage() + "could not get member data with personal number: " + personal_number);
+            logger.error(e.getMessage() + "could not get member data with personal number: " + personal_number + " in isMember(PersonalNumber) method");
         }
         return hasRows;
     }
@@ -59,7 +59,7 @@ public class DatabaseManager {
                 hasRows = true;
             }
         } catch (Exception e) {
-            logger.error(e.getMessage() + "could not get data about member with memberID: " + memberId);
+            logger.error(e.getMessage() + "could not get data about member with memberID: " + memberId+ " in isMember(MemberID) method");
         }
         return hasRows;
     }
@@ -77,7 +77,7 @@ public class DatabaseManager {
                 currentlySuspended = resultSet.getBoolean(1);
             }
         } catch (Exception e) {
-            logger.error(e.getMessage() + "could not get data about member with memberID: " + memberId);
+            logger.error(e.getMessage() + "could not get data about member with memberID: " + memberId + " in isCurrentlySuspended method");
         }
         return currentlySuspended;
     }
@@ -123,9 +123,13 @@ public class DatabaseManager {
 
                 deleteMemberStatement.setInt(1, memberId);
                 deleteMemberStatement.executeUpdate();
+
+                logger.info(deleteLoansStatement.toString());
+                logger.info(deleteMemberStatement.toString());
+                logger.info("Member with memberID: " + memberId + " has been deleted.");
             }
         } catch (Exception e) {
-            logger.error(e.getMessage() + " could not delete member with MemberID: " + memberId);
+            logger.error(e.getMessage() + " could not delete member with MemberID: " + memberId + " in deleteMember method");
         }
     }
 
@@ -144,7 +148,7 @@ public class DatabaseManager {
                 }
             }
         } catch (Exception e) {
-            logger.error(e.getMessage() + " Could not get suspensionCount for member with MemberID: " + memberId);
+            logger.error(e.getMessage() + " Could not get suspensionCount for member with MemberID: " + memberId + " in getSuspensionCount method");
         }
         return suspensionCount;
     }
@@ -166,7 +170,7 @@ public class DatabaseManager {
                 }
             }
         }catch (Exception e) {
-            logger.error(e.getMessage() + "could not get number of violations for MemberID: " + memberId);
+            logger.error(e.getMessage() + "could not get number of violations for MemberID: " + memberId + " in getNumOfViolations method");
         }
         return violationCount;
     }
@@ -194,9 +198,12 @@ public class DatabaseManager {
             try (PreparedStatement suspendStatement = this.connection.prepareStatement(query)){
                 suspendStatement.setInt(1, memberId);
                 suspendStatement.executeUpdate();
+
+                logger.info(suspendStatement.toString());
+                logger.info("Member with memberID " + memberId + "has been suspended.");
             }
         } catch (Exception e) {
-            logger.error(e.getMessage() + "member with memberID: " + memberId + " was not suspended properly.");
+            logger.error(e.getMessage() + "member with memberID: " + memberId + " was not suspended properly" + " in suspendMember method");
         }
     }
 
@@ -211,7 +218,7 @@ public class DatabaseManager {
                 resetStatement.executeUpdate();
             }
         } catch (Exception e) {
-            logger.error(e.getMessage() + " memberID: " + memberId + " violations not reset properly.");
+            logger.error(e.getMessage() + " memberID: " + memberId + " violations not reset properly" + " in resetViolations method");
         }
     }
 
@@ -240,7 +247,7 @@ public class DatabaseManager {
                 }
             }
         } catch (Exception e) {
-            logger.error(e.getMessage() + " could not get ISBN with title: " + title);
+            logger.error(e.getMessage() + " could not get ISBN with title: " + title + " in getISBN method");
         }
         return isbn;
     }
@@ -268,7 +275,7 @@ public class DatabaseManager {
                 }
             }
         } catch (Exception e) {
-            logger.error(e.getMessage() + " could not loan " + title + " for MemberID : " + memberId);
+            logger.error(e.getMessage() + " could not loan " + title + " for MemberID : " + memberId + " in loanBook method");
         }
     }
 
@@ -287,7 +294,7 @@ public class DatabaseManager {
                 }
             }
         } catch (Exception e) {
-            logger.error(e.getMessage() + " could not get number of loans for MemberID : " + memberId);
+            logger.error(e.getMessage() + " could not get number of loans for MemberID : " + memberId + " in getNumOfLoans method");
         }
         return numOfLoans;
     }
@@ -307,7 +314,7 @@ public class DatabaseManager {
                 }
             }
         } catch (Exception e) {
-            logger.error(e.getMessage() + " could not get max number of loans for MemberID : " + memberId);
+            logger.error(e.getMessage() + " could not get max number of loans for MemberID : " + memberId + " in getMaxNumOfLoans method");
         }
         return maxNumOfLoans;
      }
@@ -327,7 +334,7 @@ public class DatabaseManager {
                 }
             }
         } catch (Exception e) {
-            logger.error(e.getMessage() + " could not data about ISBN: " + isbn);
+            logger.error(e.getMessage() + " could not data about ISBN: " + isbn + " in isBookAvailable method");
         }
         return available;
      }
@@ -341,7 +348,7 @@ public class DatabaseManager {
                 decrementStatement.executeUpdate();
             }
         } catch (Exception e) {
-            logger.error(e.getMessage() + " could not decrement number of copies for book with ISBN:  " + isbn);
+            logger.error(e.getMessage() + " could not decrement number of copies for book with ISBN:  " + isbn + " in decrementAvailableCopies method");
         }
      }
 
@@ -393,8 +400,8 @@ public class DatabaseManager {
                     }
                 }
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            logger.error("Could not get the loans of the the copy with memberID: " + memberId + " and " + isbn + " in getLoansOfCopy method");
         }
         return loansOfCopy;
     }
@@ -418,7 +425,7 @@ public class DatabaseManager {
                 logger.info("Book with " + isbn + " and memberID: " + memberID + " was returned sucessfully");
             }
         } catch (Exception e) {
-            logger.error(e.getMessage() + " could not return book for MemberID : " + memberID + " and ISBN: " + isbn);
+            logger.error(e.getMessage() + " could not return book for MemberID : " + memberID + " and ISBN: " + isbn + " in returnBook method");
         }
     }
 
@@ -431,7 +438,7 @@ public class DatabaseManager {
                 incrementStatement.executeUpdate();
             }
         } catch (Exception e) {
-            logger.error(e.getMessage() + " could not increment available copies for ISBN: " + isbn);
+            logger.error(e.getMessage() + " could not increment available copies for ISBN: " + isbn + "in the incrementAvailableCopies method");
         }
     }
 
@@ -444,7 +451,7 @@ public class DatabaseManager {
                 decrementStatment.executeUpdate();
             }
         } catch (Exception e) {
-            logger.error(e.getMessage() + " could not decrement number of books for member with memberID: " + memberId);
+            logger.error(e.getMessage() + " could not decrement number of books for member with memberID: " + memberId + "in decrementCurrentNumBooks method");
         }
     }
 
@@ -456,7 +463,7 @@ public class DatabaseManager {
                 incrementStatement.executeUpdate();
             }
         } catch (Exception e) {
-            logger.error(e.getMessage() + " could not increment violations for " + memberId);
+            logger.error(e.getMessage() + " could not increment violations for " + memberId + " in incrementViolations method");
         }
     }
 
@@ -480,7 +487,7 @@ public class DatabaseManager {
                 }
             }
         } catch (Exception e) {
-            logger.error(e.getMessage() + " could not get loanDate for MemberID : " + memberId + " and ISBN: " + isbn);
+            logger.error(e.getMessage() + " could not get loanDate for MemberID : " + memberId + " and ISBN: " + isbn + "in getLoanDate method.");
         }
         return loanDate;
     }
@@ -490,14 +497,14 @@ public class DatabaseManager {
 
 
     /** Unsuspend member */
-    public LocalDate getSuspensionEndDate(int member_id){
+    public LocalDate getSuspensionEndDate(int memberId){
         Date firstEndDate = null;
         LocalDate endDate = null;
         try {
             String query = "SELECT suspension_end_date FROM members WHERE member_id = ?";
             try (PreparedStatement dateStatement = this.connection.prepareStatement(query)){
 
-                dateStatement.setInt(1,member_id);
+                dateStatement.setInt(1,memberId);
                 try (ResultSet resultSet = dateStatement.executeQuery()){
                     if (resultSet.next()){
                         firstEndDate = resultSet.getDate("suspension_end_date");
@@ -505,8 +512,8 @@ public class DatabaseManager {
                     }
                 }
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            logger.error("Could not get suspension end date for memberID: " + memberId + " in the getSuspensionEndDate method");
         }
         return endDate;
     }
@@ -518,13 +525,13 @@ public class DatabaseManager {
                 incrementStatement.setInt(1, memberId);
                 incrementStatement.executeUpdate();
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            logger.info("Could not reset current suspension for " + memberId + " in resetCurrentSuspension method");
         }
     }
 
 
-    /** Extra methods */
+    /** Extra method */
     public boolean isDate15DaysAgo(LocalDate date){
        if (date == null){
            return false;

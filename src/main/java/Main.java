@@ -77,7 +77,7 @@ public class Main {
                         System.out.println("------------------------------");
                     } else if (returnResult == 3) {
                         System.out.println("\033[0;33mReturn is delayed! Book with ISBN: " + isbn + " has been returned and violation has been added for memberID: " + memberId + " \033[0m");
-                        System.out.println("\033[0;33mViolationcount is 3 for memberID: " + memberId + " please suspend member! \033[0m");
+                        System.out.println("\033[0;31mViolationcount is 3 for memberID: " + memberId + " please suspend member! \033[0m");
                         System.out.println("------------------------------");
                     } else if (returnResult == 4){
                         System.out.println("\033[0;33mReturn is delayed! Book with ISBN: " + isbn + " has been returned and violation has been added for memberID: " + memberId + " \033[0m");
@@ -165,7 +165,12 @@ public class Main {
                         LocalDate dateIn15Days = LocalDate.now().plusDays(15);
                         System.out.println("\033[0;32mMember with memberID: " + memberid + " has been suspended until " + dateIn15Days + "  \033[0m");
                         System.out.println("------------------------------");
-                    }else{
+                    }else if (resultSuspend == -1){
+                        LocalDate dateIn15Days = LocalDate.now().plusDays(15);
+                        System.out.println("\033[0;32mMember with memberID: " + memberid + " has been suspended until " + dateIn15Days + "  \033[0m");
+                        System.out.println("\033[0;31mMember with: " + memberid + " has reached 3 suspensions, please delete member! \033[0m");
+                        System.out.println("------------------------------");
+                    } else{
                         System.out.println("\033[0;33mMember with: " + memberid + " does not have more than 2 violations! \033[0m");
                         System.out.println("------------------------------");
                     }
@@ -234,7 +239,7 @@ public class Main {
                         System.out.println("\033[0;31mMember with memberID: " + memberidToUnsuspend + " not found! \033[0m");
                         System.out.println("------------------------------");
                     } else if (suspendResult == 2){
-                        System.out.println("\033[0;33mMember with memberID: " + memberidToUnsuspend + " is currently not suspended! \033[0m");
+                        System.out.println("\033[0;33mMember with memberID: " + memberidToUnsuspend + " is not currently suspended! \033[0m");
                         System.out.println("------------------------------");
                     } else if (suspendResult == 3){
                         System.out.println("\033[0;32mExpired suspensions found and deleted for member with memberID: " + memberidToUnsuspend + " \033[0m");
