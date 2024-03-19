@@ -540,4 +540,24 @@ public class DatabaseManager {
        }
     }
 
+
+    public ArrayList<Integer> getMembersWithSuspension() {
+        ArrayList<Integer> memberIDS = new ArrayList<>();
+        try {
+            String query = "SELECT member_id FROM members WHERE currently_suspended = 1";
+            try (PreparedStatement preparedStatement = this.connection.prepareStatement(query)) {
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        int memberID = resultSet.getInt("member_id");
+                        memberIDS.add(memberID);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            logger.info("Could not get members with suspensions using getMembersWithSuspension method");
+        }
+        return memberIDS;
+    }
+
+
 }

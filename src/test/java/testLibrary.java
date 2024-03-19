@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -123,7 +125,7 @@ public class testLibrary {
         DatabaseManager databaseManager = new DatabaseManager();
         Library library = new Library(databaseManager);
 
-        int result = library.unsuspendMember(123);
+        int result = library.unsuspendMember();
 
         assertEquals(1, result);
     }
@@ -368,30 +370,37 @@ public class testLibrary {
 
 
     @Test
-    public void testUnsuspendMember_valid() {
+    public void testUnsuspendMember_valid(){
         DatabaseManager mockDatabaseManager = mock(DatabaseManager.class);
         Library library = new Library(mockDatabaseManager);
 
         LocalDate endDate = LocalDate.of(2024, 3, 16);
 
-        when(mockDatabaseManager.isMember(123)).thenReturn(true);
-        when(mockDatabaseManager.isCurrentlySuspended(123)).thenReturn(true);
+        ArrayList<Integer> memberIds =new ArrayList<>(Arrays.asList(123));
+
+        when(mockDatabaseManager.getMembersWithSuspension()).thenReturn(memberIds);
         when(mockDatabaseManager.getSuspensionEndDate(123)).thenReturn(endDate);
-        int result = library.unsuspendMember(123);
-        assertEquals(3, result);
+
+        int result = library.unsuspendMember();
+
+        assertEquals(2, result);
     }
+
     @Test
-    public void testUnsuspendMember_notValidBcsDateOfSuspension() {
+    public void testUnsuspendMember_invalid(){
         DatabaseManager mockDatabaseManager = mock(DatabaseManager.class);
         Library library = new Library(mockDatabaseManager);
 
         LocalDate endDate = LocalDate.of(2024, 3, 25);
 
-        when(mockDatabaseManager.isMember(123)).thenReturn(true);
-        when(mockDatabaseManager.isCurrentlySuspended(123)).thenReturn(true);
+        ArrayList<Integer> memberIds =new ArrayList<>(Arrays.asList(123));
+
+        when(mockDatabaseManager.getMembersWithSuspension()).thenReturn(memberIds);
         when(mockDatabaseManager.getSuspensionEndDate(123)).thenReturn(endDate);
-        int result = library.unsuspendMember(123);
-        assertEquals(4, result);
+
+        int result = library.unsuspendMember();
+
+        assertEquals(3, result);
     }
 
 

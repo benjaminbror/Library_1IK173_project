@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -230,28 +231,19 @@ public class Main {
 
                 case 6:
                     //Unsuspend member
-                    Scanner unsuspendInput = new Scanner(System.in);
-                    System.out.println("Enter memberID:");
-                    int memberidToUnsuspend = unsuspendInput.nextInt();
 
-                    int suspendResult = library.unsuspendMember(memberidToUnsuspend);
-                    if (suspendResult == 1){
-                        System.out.println("\033[0;31mMember with memberID: " + memberidToUnsuspend + " not found! \033[0m");
+                    int unsuspendMemberResult = library.unsuspendMember();
+                    if (unsuspendMemberResult == 1){
+                        System.out.println("\033[0;33mNo members with current suspension found! \033[0m");
                         System.out.println("------------------------------");
-                    } else if (suspendResult == 2){
-                        System.out.println("\033[0;33mMember with memberID: " + memberidToUnsuspend + " is not currently suspended! \033[0m");
-                        System.out.println("------------------------------");
-                    } else if (suspendResult == 3){
-                        System.out.println("\033[0;32mExpired suspensions found and deleted for member with memberID: " + memberidToUnsuspend + " \033[0m");
-                        System.out.println("------------------------------");
-                    } else if (suspendResult == -1){
-                        System.out.println("\033[0;32mExpired suspensions found and deleted for member with memberID: " + memberidToUnsuspend + " \033[0m");
-                        System.out.println("\033[0;31mSuspension count is above 2, please delete member with memberID: " + memberidToUnsuspend + " \033[0m");
+                    } else if (unsuspendMemberResult == 2) {
+                        System.out.println("\033[0;32mExpired suspensions found and deleted! \033[0m");
                         System.out.println("------------------------------");
                     } else{
-                        System.out.println("\033[0;33mNo expired suspensions were found for member with memberID: " + memberidToUnsuspend + " \033[0m");
+                        System.out.println("\033[0;33mNo expired suspensions found! \033[0m");
                         System.out.println("------------------------------");
                     }
+
                     break;
 
                 case 7:

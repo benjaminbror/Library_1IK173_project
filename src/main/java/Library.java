@@ -161,24 +161,28 @@ public class Library {
         return result;
     }
 
-    public int unsuspendMember(int memberID) {
 
-        if (!databaseManager.isMember(memberID)) {
-            return 1;
-        }
-        if (!databaseManager.isCurrentlySuspended(memberID)){
-            return 2;
-        }
+
+    public int unsuspendMember(){
+        ArrayList arrayList = databaseManager.getMembersWithSuspension();
         LocalDate currentDate = LocalDate.now();
-        LocalDate endDate = databaseManager.getSuspensionEndDate(memberID);
-        if (currentDate.isEqual(endDate) || currentDate.isAfter(endDate)) {
-            databaseManager.resetCurrentSuspension(memberID);
-            if (databaseManager.getSuspensionCount(memberID) >= 3){
-                return -1;
+
+        if (arrayList.isEmpty()){
+            return 1;
+            //No members with current suspensions found
+        }
+        else{
+            for (int i = 0; i < arrayList.size(); i++){
+                int memberId = (int) arrayList.get(i);
+                LocalDate endDate = databaseManager.getSuspensionEndDate(memberId);
+                if (currentDate.isEqual(endDate) || currentDate.isAfter(endDate)){
+                    databaseManager.resetCurrentSuspension(memberId);
+                    return 2;
+                    //Expired suspensions found and deleted
+                }
             }
             return 3;
-        } else {
-            return 4;
+            //No members with ending suspensions found
         }
     }
 
