@@ -16,7 +16,6 @@ public class DatabaseManager {
 
     public DatabaseManager() {
         try {
-            //this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Library",  "root", "1IK173Lib");
             this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "hejhej123");
 
         } catch (Exception e) {
@@ -37,7 +36,6 @@ public class DatabaseManager {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                /* System.out.println(resultSet.getString("first_name")+ " " + resultSet.getString("last_name"));*/
                 hasRows = true;
             }
         } catch (Exception e) {
@@ -55,7 +53,6 @@ public class DatabaseManager {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                /* System.out.println(resultSet.getString("first_name")+ " " + resultSet.getString("last_name"));*/
                 hasRows = true;
             }
         } catch (Exception e) {
@@ -208,7 +205,6 @@ public class DatabaseManager {
     }
 
 
-
     public void resetViolations(int memberId){
         try {
             String query = "UPDATE members SET Num_of_violations = 0 WHERE member_id = ?";
@@ -221,13 +217,6 @@ public class DatabaseManager {
             logger.error(e.getMessage() + " memberID: " + memberId + " violations not reset properly" + " in resetViolations method");
         }
     }
-
-
-
-
-
-
-
 
 
 
@@ -386,7 +375,6 @@ public class DatabaseManager {
     public int getLoansOfCopy (int memberId, int isbn){
         int loansOfCopy = 0;
         try {
-            //String query = "SELECT loan_id FROM loans WHERE member_id = ? AND isbn = ?";
             String query = "SELECT COUNT(*) as count FROM loans WHERE member_id = ? AND isbn = ?";
 
             try (PreparedStatement hasCopyStatement = this.connection.prepareStatement(query)){

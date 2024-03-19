@@ -169,7 +169,6 @@ public class Library {
 
         if (arrayList.isEmpty()){
             return 1;
-            //No members with current suspensions found
         }
         else{
             for (int i = 0; i < arrayList.size(); i++){
@@ -178,11 +177,9 @@ public class Library {
                 if (currentDate.isEqual(endDate) || currentDate.isAfter(endDate)){
                     databaseManager.resetCurrentSuspension(memberId);
                     return 2;
-                    //Expired suspensions found and deleted
                 }
             }
             return 3;
-            //No members with ending suspensions found
         }
     }
 

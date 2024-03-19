@@ -4,3 +4,12 @@
 2024-03-19 15:58:30,587 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: DELETE FROM loans WHERE member_id = 1981
 2024-03-19 15:58:30,587 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: DELETE FROM members where member_id = 1981
 2024-03-19 15:58:30,587 INFO DatabaseManager [main] Member with memberID: 1981 has been deleted.
+2024-03-19 16:27:15,119 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, max_num_books, current_num_books) VALUES('Test','Testsson',123321,123,3,0)
+2024-03-19 16:27:15,122 INFO DatabaseManager [main] Test was registered correctly! 
+2024-03-19 16:27:15,195 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO loans (member_id, isbn, loan_date) VALUES (123, 112345, '2024-03-19')
+2024-03-19 16:27:15,198 INFO DatabaseManager [main] Book with title: Book 10 was borrowed successfully by member with memberID: 123
+2024-03-19 16:27:15,235 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: DELETE FROM loans WHERE member_id = 123 AND isbn = 112345
+2024-03-19 16:27:15,237 INFO DatabaseManager [main] Book with 112345 and memberID: 123 was returned sucessfully
+2024-03-19 16:27:15,321 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: DELETE FROM loans WHERE member_id = 123
+2024-03-19 16:27:15,321 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: DELETE FROM members where member_id = 123
+2024-03-19 16:27:15,321 INFO DatabaseManager [main] Member with memberID: 123 has been deleted.
