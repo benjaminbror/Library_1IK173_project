@@ -120,7 +120,13 @@ public class Main {
                     boolean validEducationLevel = false;
 
                     while(!validEducationLevel){
-                        System.out.println("Enter your education level 1-4: (Undergrad / Postgrad / PHD / Teacher) ");
+                        System.out.println("Enter your education level 1-4:");
+                        System.out.println("-------------------------------");
+                        System.out.println("1. Undergraduate student");
+                        System.out.println("2. Postgraduate student");
+                        System.out.println("3. PHD student/candidate");
+                        System.out.println("4. Teacher");
+                        System.out.print("Option: ");
                         int educationLevel = registrationInput.nextInt();
                         if (educationLevel >= 1 && educationLevel <= 4){
                             edulvl = educationLevel;
