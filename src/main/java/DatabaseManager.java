@@ -530,23 +530,12 @@ public class DatabaseManager {
         }
     }
 
-
-    /** Extra method */
-    public boolean isDate15DaysAgo(LocalDate date){
-       if (date == null){
-           return false;
-       }else{
-           return LocalDate.now().minusDays(15).isAfter(date);
-       }
-    }
-
-
     public ArrayList<Integer> getMembersWithSuspension() {
         ArrayList<Integer> memberIDS = new ArrayList<>();
         try {
             String query = "SELECT member_id FROM members WHERE currently_suspended = 1";
-            try (PreparedStatement preparedStatement = this.connection.prepareStatement(query)) {
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            try (PreparedStatement idStatement = this.connection.prepareStatement(query)) {
+                try (ResultSet resultSet = idStatement.executeQuery()) {
                     while (resultSet.next()) {
                         int memberID = resultSet.getInt("member_id");
                         memberIDS.add(memberID);
@@ -560,4 +549,12 @@ public class DatabaseManager {
     }
 
 
+    /** Extra method */
+    public boolean isDate15DaysAgo(LocalDate date){
+       if (date == null){
+           return false;
+       }else{
+           return LocalDate.now().minusDays(15).isAfter(date);
+       }
+    }
 }

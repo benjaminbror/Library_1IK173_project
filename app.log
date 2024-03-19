@@ -1,1 +1,6 @@
 
+2024-03-19 15:57:56,089 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: INSERT INTO members(first_name, last_name, personal_number, member_id, max_num_books, current_num_books) VALUES('Benjamin','Brorsson',9910082073,1981,3,0)
+2024-03-19 15:57:56,092 INFO DatabaseManager [main] Benjamin was registered correctly! 
+2024-03-19 15:58:30,587 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: DELETE FROM loans WHERE member_id = 1981
+2024-03-19 15:58:30,587 INFO DatabaseManager [main] com.mysql.cj.jdbc.ClientPreparedStatement: DELETE FROM members where member_id = 1981
+2024-03-19 15:58:30,587 INFO DatabaseManager [main] Member with memberID: 1981 has been deleted.
